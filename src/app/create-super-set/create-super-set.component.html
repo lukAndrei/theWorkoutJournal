@@ -1,0 +1,44 @@
+<div class="form-block">
+    <button *ngIf="workout.exerciseList.length>0" style="width:150px;"  (click)="addSuperSet=!addSuperSet" class="btn btn-outline-dark">Create superset</button>
+    <form *ngIf="addSuperSet" #f="ngForm"  (ngSubmit)="createSuperSet(f.value)">
+        <div class="superSet">
+            <ul *ngFor="let ex of workout.exerciseList;index as j" class="list-group list-group-horizontal list-group-flush">
+                 <li class="list-group-item">
+                    <div class="form-check">
+                        <input [checked]="resetCheckbox" #superSetCheckBox ngModel name="superSetEx" class="form-check-input" [value]=" ex.name " (change)="onCheckBoxChange($event)" type="checkbox">
+                        <label class="form-check-label" for="defaultCheck1">
+                             {{ex.name}}
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="form-group">        
+            <label for="superSetNo"></label>
+            <input ngModel #noOfTimes class="form-control" type="text" placeholder="how many times" name="noOfTimes">  
+        </div> 
+    <button  type="submit" class="btn btn-outline-dark">Create superset</button>
+    </form>
+</div>
+<div class="superSet" *ngFor="let set of workout.superSet; index as s">
+    <div>
+        <ul class="list-group list-group-horizontal list-group-flush">
+            <ul *ngFor="let ex of set.setList" class="list-group list-group-flush">
+                <li class="list-group-item border-0">{{ ex.name }}</li>
+                <li class="list-group-item border-0">{{ ex.totalReps }} reps </li>
+            </ul>
+            <li class="list-group-item border-0">
+                {{ set.noOfTimes }} rounds
+            </li>
+            <li class="list-group-item border-0">
+                <button *ngIf="superSet.length==1" (click)="addExerciseToSet(s)"class="btn btn-link">Add exercise to set</button>
+            </li>
+            <li class="list-group-item border-0">
+                <button *ngIf="set.setList.includes(superSet[0])" (click)="removeExerciseFromSet(s)"class="btn btn-link">Remove ex from set</button>
+            </li>
+            <li class="list-group-item border-0">
+                <button (click)="removeSuperSet(s)"class="btn btn-link">Remove</button>
+            </li>
+        </ul>
+    </div>
+</div>

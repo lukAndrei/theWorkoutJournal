@@ -1,0 +1,24 @@
+
+
+.control-buttons {
+    max-width:200px;
+    margin:auto;
+    justify-content: center;
+}
+.exercise {
+    max-width:450px;
+}
+
+.inputList li{
+    text-align: center;
+}
+
+.exInputData{
+  
+    margin: auto;
+    text-align: center;
+}
+
+input{
+    text-align: center;
+}

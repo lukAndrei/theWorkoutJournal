@@ -1,0 +1,47 @@
+<div class="container">
+    <form #f="ngForm" (ngSubmit)="submitEx(f.value)">
+        <div class="form-group">        
+            <label for="wodName"></label>
+            <input #workoutName ngModel class="form-control no-border"  type="text" placeholder="name it.." name="workoutName">  
+        </div>
+        <div class="form-group">        
+            <label for="wodType"></label>
+            <input #workoutType ngModel class="form-control" type="text" placeholder="..." name="workoutType">  
+        </div>
+        <button *ngIf="workout.exerciseList.length>0" type="submit" class="btn btn-outline-dark">Submit workout</button>
+    </form>
+    <create-super-set [workout]="workout"></create-super-set>
+        <div class="workout" *ngFor="let ex of workout.exerciseList;index as j">
+            <ul class="list-group list-group-horizontal list-group-flush">
+                <li class="list-group-item border-0">
+                    <button class="btn btn-link" data-toggle="collapse" attr.data-target="#id-{{ex.exId}}">{{ j+1 }}</button>
+                </li>
+                <li class="list-group-item border-0">
+                    <button class="btn btn-link" data-toggle="collapse" attr.data-target="#id-{{ex.exId}}">{{ ex.name }}</button>
+                </li>
+                <li class="list-group-item border-0">
+                    <button type="button" (click)="removeExercise(j,ex)"class="btn btn-link">Remove</button>
+                </li>
+            </ul>
+            <div attr.id="id-{{ex.exId}}" class="collapse">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Set</th>
+                            <th scope="col">Reps</th>
+                            <th scope="col">Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let set of ex.sets; index as i">
+                        <th scope="row">{{ i+1 }}</th>
+                        <td>{{ set.reps }}</td>
+                        <td>{{ set.weight }}</td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <add-exercise [workout]="workout"></add-exercise>
+
+
+</div>
+

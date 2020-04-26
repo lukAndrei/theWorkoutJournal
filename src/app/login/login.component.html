@@ -1,0 +1,16 @@
+<div class="container">
+    <form #f="ngForm" (ngSubmit)="loginWithUserAndPassword(f.value)">
+        <div class="form-group">
+            <label  for="email">Email Adress</label>
+            <input #email="ngModel" ngModel name="email" type="email" class="form-control" id="email" aria-describedby="emailInput" required>
+            <div class="alert alert-danger" *ngIf="email.touched && email.invalid">You need the password</div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input #password="ngModel" ngModel name="password" type="password" class="form-control" id="password" aria-describedby="password" required>
+            <div class="alert alert-danger" *ngIf="password.touched && password.invalid">You need the password</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+
