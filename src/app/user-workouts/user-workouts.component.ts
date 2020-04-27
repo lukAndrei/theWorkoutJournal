@@ -32,7 +32,7 @@ export class UserWorkoutsComponent implements OnInit, OnDestroy {
         }),
         mergeMap(workout=>{
           return this.getUserWorkouts.getWorkoutSuperSets(workout.id).pipe(switchMap(setList=>{
-            //workout.superSet = setList
+            workout.superSet = setList
             return of(workout)
           }))
         })

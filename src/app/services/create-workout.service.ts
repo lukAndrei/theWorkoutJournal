@@ -48,10 +48,10 @@ export class CreateWorkoutService {
 
     superSetList.forEach(set => {
         let superSetData = {
-          rounds: set.noOfTimes,
+          rounds: set.rounds,
           exercises: []
         }
-        set.setList.forEach(ex=>{
+        set.exerciseList.forEach(ex=>{
           let exModel = {
             exName: ex.name,
             set: ex.sets,

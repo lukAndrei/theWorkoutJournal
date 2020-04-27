@@ -6,6 +6,7 @@ import { AppUser } from '../models/appUser.model';
 import { Observable } from 'rxjs/internal/Observable';
 import { map, switchMap } from 'rxjs/operators';
 import { ExerciseModel } from '../models/exercise.model';
+import { SuperSetModel } from '../models/superset.model';
 
 
 @Injectable({
@@ -35,7 +36,6 @@ export class GetUserWorkoutsService {
 
   getWorkoutSuperSets(workoutId){
     return this.db.collection('/users').doc(this.currentUser.uid).collection('/workout').doc(workoutId).collection('/superSets').valueChanges()
-    .pipe(map(ExerciseModel.fromJSONSuperSet)) 
+    .pipe(map(SuperSetModel.fromJSONlist)) 
  }
-
 }

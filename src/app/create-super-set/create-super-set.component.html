@@ -23,18 +23,18 @@
 <div class="superSet" *ngFor="let set of workout.superSet; index as s">
     <div>
         <ul class="list-group list-group-horizontal list-group-flush">
-            <ul *ngFor="let ex of set.setList" class="list-group list-group-flush">
+            <ul *ngFor="let ex of set.exerciseList" class="list-group list-group-flush">
                 <li class="list-group-item border-0">{{ ex.name }}</li>
                 <li class="list-group-item border-0">{{ ex.totalReps }} reps </li>
             </ul>
             <li class="list-group-item border-0">
-                {{ set.noOfTimes }} rounds
+                {{ set.rounds }} rounds
             </li>
             <li class="list-group-item border-0">
-                <button *ngIf="superSet.length==1" (click)="addExerciseToSet(s)"class="btn btn-link">Add exercise to set</button>
+                <button *ngIf="tempSuperSetList.length==1" (click)="addExerciseToSet(s)"class="btn btn-link">Add exercise to set</button>
             </li>
             <li class="list-group-item border-0">
-                <button *ngIf="set.setList.includes(superSet[0])" (click)="removeExerciseFromSet(s)"class="btn btn-link">Remove ex from set</button>
+                <button *ngIf="set.exerciseList.includes(tempSuperSetList[0])" (click)="removeExerciseFromSet(s)"class="btn btn-link">Remove ex from set</button>
             </li>
             <li class="list-group-item border-0">
                 <button (click)="removeSuperSet(s)"class="btn btn-link">Remove</button>

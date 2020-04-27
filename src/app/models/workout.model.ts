@@ -1,10 +1,11 @@
 
 import { ExerciseModel } from '../models/exercise.model'
+import { SuperSetModel } from './superset.model';
 export class WorkoutModel {
     public name: string;
     public type: string;
     public exerciseList: ExerciseModel[]=[];
-    public superSet = [];
+    public superSet: SuperSetModel[] = []
     public id;
     public date;
   
@@ -23,25 +24,21 @@ export class WorkoutModel {
         let emptyExerciseList = []
         return new WorkoutModel(emptyExerciseList, w.name, w.type, w.id, w.date)
     }
-    addEx(exercise){
+    addEx(exercise:ExerciseModel){
         this.exerciseList.push(exercise)
     }
-    addSuperSet(superSet,noOfTimes){
-        let workSet = {
-            noOfTimes: noOfTimes,
-            setList: superSet
-        }
-        this.superSet.push(workSet)  
+    addSuperSet(superSet:SuperSetModel){
+        this.superSet.push(superSet)  
     }
     addExToSuperSet(index,ex){
-        this.superSet[index].setList.push(ex)
+        this.superSet[index].exerciseList.push(ex)
     }
     removeExFromSuperSet(index,name){
-        this.superSet[index].setList.forEach((ex,j)=>{
+        this.superSet[index].exerciseList.forEach((ex,j)=>{
             if (ex.name==name){
-                this.superSet[index].setList.splice(j,1)
+                this.superSet[index].exerciseList.splice(j,1)
             }
-            if (this.superSet[index].setList.length==0){
+            if (this.superSet[index].exerciseList.length==0){
                 this.removeSuperSet(index)
             }
         });
@@ -54,12 +51,12 @@ export class WorkoutModel {
     }
     removeExFromAll(name){
         this.superSet.forEach((set,i)=>{
-            set.setList.forEach((ex,j)=>{
+            set.exerciseList.forEach((ex,j)=>{
                 if (ex.name==name){
-                    this.superSet[i].setList.splice(j,1)
+                    this.superSet[i].exerciseList.splice(j,1)
                 }
             })
-            if (set.length==0){
+            if (set.exerciseList.length==0){
                 this.removeSuperSet(i)
             }
         })

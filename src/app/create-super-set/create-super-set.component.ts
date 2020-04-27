@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChildren, QueryList, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ExerciseModel} from '../models/exercise.model';
 import { WorkoutModel } from '../models/workout.model';
+import { SuperSetModel } from '../models/superset.model';
 
 @Component({
   selector: 'create-super-set',
@@ -10,7 +11,10 @@ import { WorkoutModel } from '../models/workout.model';
 export class CreateSuperSetComponent implements OnInit {
   addSuperSet=false;
   exerciseList: ExerciseModel[] = [];
-  superSet=[];
+  tempSuperSetList=[];
+  emtpyList = []
+  rounds = 1;
+  superSet = new SuperSetModel(this.emtpyList,this.rounds)
   @ViewChildren("superSetCheckBox") superSetCheckBox: QueryList<ElementRef>
   @Input() workout = new WorkoutModel(this.exerciseList);
   constructor() { }
@@ -19,9 +23,15 @@ export class CreateSuperSetComponent implements OnInit {
   }
   
   createSuperSet(f){
-    let noOfTimes = f.noOfTimes || 1
-    this.workout.addSuperSet(this.superSet,noOfTimes);
-    this.superSet=[];
+
+    this.superSet.rounds = f.noOfTimes || 1
+    this.superSet.exerciseList = this.tempSuperSetList;
+
+    this.tempSuperSetList = []
+    
+    this.workout.addSuperSet(this.superSet);
+    this.superSet = new SuperSetModel(this.emtpyList,1);
+
     this.clearCheckBox()
     this.addSuperSet=false;
   }
@@ -29,22 +39,22 @@ export class CreateSuperSetComponent implements OnInit {
     this.workout.removeSuperSet(s)
   }
   addExerciseToSet(index){
-    if (this.superSet.length>0){
-       this.workout.addExToSuperSet(index,this.superSet[0])
+    if (this.superSet.exerciseList.length>0){
+       this.workout.addExToSuperSet(index,this.tempSuperSetList[0])
     }
   }
    removeExerciseFromSet(index){
-    if (this.superSet.length>0){
-      this.workout.removeExFromSuperSet(index,this.superSet[0].name)
+    if (this.superSet.exerciseList.length>0){
+      this.workout.removeExFromSuperSet(index,this.tempSuperSetList[0].name)
     }
 }
   onCheckBoxChange(event){
     let exercise: ExerciseModel[];
     if (event.target.checked){
         exercise = this.workout.exerciseList.filter(e =>e.name==event.target.value)
-        this.superSet.push(exercise[0])
+        this.tempSuperSetList.push(exercise[0])
     } else {
-        this.superSet = this.superSet.filter(e => e.name!=event.target.value)
+        this.tempSuperSetList = this.tempSuperSetList.filter(e => e.name!=event.target.value)
     }
   }
   clearCheckBox(){

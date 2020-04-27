@@ -21,10 +21,6 @@ export class ExerciseModel {
     static fromJSONlist(a:[]){
         return a.map(exData => ExerciseModel.initiateExercise(exData))
     }
-    static fromJSONSuperSet(a:[]){
-        console.log(a)
-        //return a.map(exData => ExerciseModel.initiateExercise(exData))
-    }
 
     static initiateExercise(exData){
         let setList = [];
