@@ -23,6 +23,17 @@ import { CreateWorkoutComponent } from './create-workout/create-workout.componen
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { CreateSuperSetComponent } from './create-super-set/create-super-set.component';
 import { UserWorkoutsComponent } from './user-workouts/user-workouts.component';
+import { WorkoutComponent } from './workout/workout.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EditExercisesComponent } from './edit-exercises/edit-exercises.component';
+import { AuthGuardService } from './services/auth-guard.service';
+
+
+
 
 @NgModule({
   declarations: [
@@ -35,16 +46,22 @@ import { UserWorkoutsComponent } from './user-workouts/user-workouts.component';
     CreateWorkoutComponent,
     AddExerciseComponent,
     CreateSuperSetComponent,
-    UserWorkoutsComponent
+    UserWorkoutsComponent,
+    WorkoutComponent,
+    EditExercisesComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     NotifierModule,
     FormsModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    NgbModule,
+    DragDropModule,
+    MatExpansionModule,
 
     RouterModule.forRoot([
       {path:'', component: HomeComponent},
@@ -54,12 +71,17 @@ import { UserWorkoutsComponent } from './user-workouts/user-workouts.component';
       {path:'login', component: LoginComponent},
       
       {path:'create-account', component: CreateAccountComponent },
-      {path:'create-workout', component: CreateWorkoutComponent },
-      {path:'user-workouts', component: UserWorkoutsComponent }
+
+      {path:'create-workout/:id', component: CreateWorkoutComponent,    canActivate:[AuthGuardService]  },
+      {path:'create-workout', component: CreateWorkoutComponent,        canActivate:[AuthGuardService]  },
+
+      {path:'workout/:id', component: WorkoutComponent,    canActivate:[AuthGuardService]  },
+
+      {path:'user-workouts', component: UserWorkoutsComponent,          canActivate:[AuthGuardService]  },
       
     ])
   ],
-  providers: [AuthServiceService, RegisterServiceService],
+  providers: [AuthServiceService, RegisterServiceService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

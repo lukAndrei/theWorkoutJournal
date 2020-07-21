@@ -1,0 +1,199 @@
+.container-workouts {
+    display:flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    flex-wrap: wrap-reverse;
+    padding:5px;
+}
+.card {
+    width:500px;
+    margin:30px auto;
+    border-radius:20px;
+}
+.card-body{
+}
+
+.card-header {
+    font-family: 'Sriracha', cursive;
+    font-size:18px;
+    background-color: white;
+    width:80%;
+    margin:auto;
+    display:flex;
+    justify-content: space-around;
+}    
+
+.superset-box{
+    display:flex;
+    margin-bottom:30px;
+}
+.superset-ex-list {
+  padding:10px;
+  width:50%;
+  text-align: center;
+}
+.superset-ex-box {
+    margin-bottom:20px;
+}
+.superset-data {
+  width:50%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  padding:5px;
+  margin-left:20px;
+  font-family: 'Sriracha', cursive;
+
+}
+.time-box {
+    display:flex;
+    justify-content: center;
+    font-size:18px;
+}
+.time-text {
+    margin-right:10px;
+}
+.rounds-box{
+    display:flex;
+    justify-content: center;
+    margin-bottom:20px;
+    font-size:18px;
+
+}
+.rounds-box span {
+    display: block;
+}
+.reps {
+    display:flex;
+    font-size:16px;
+    margin-top:10px;
+    font-family: 'Noto Serif', serif;
+    justify-content: center;
+
+}
+.reps span {
+    display: block;  
+    margin-right:5px;
+}
+
+.ex-name {
+    font-size: 20px;
+    font-family: 'Sriracha', cursive;
+}
+
+form button {
+    display:block;
+    margin:auto;
+}
+form textarea {
+    border-radius: 10px;
+}
+.workout-name {
+    font-size: 18px;
+    max-width:100;
+    display:flex;
+    justify-content: center;
+
+}
+.workout-name span{
+    display:block;
+}
+.comments-link {
+    margin-bottom:10px;
+}
+.comments-link a {
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+}
+.comments-span {
+    display:flex;
+    justify-content: flex-start;
+}
+.comments-span span {
+    display: inline-block ;
+    vertical-align: middle;
+}
+.comments-box{
+    padding:10px;
+}
+.user {
+    display: flex;
+    justify-content: flex-start;
+}
+.user span {
+    display:block;
+}
+.show-comments {
+    margin-top: 15px;
+}
+.replies {
+    padding:5px;
+}
+.user-account {
+    display:flex;
+    align-items: center;
+}
+.reply-user-account {
+    margin-left:20px;
+    display:flex;
+    align-items: center;
+}
+.comment {
+    padding:5px;
+    border-radius: 10px;
+    width:100%
+}
+.comments {
+    margin-top:20px;
+}
+.reply-comment {
+    padding:5px;
+    border-radius: 10px;
+    margin-top: 10px;
+    width:100%;
+}
+.reply-form {
+    margin-bottom:15px;
+    margin-left:30px;
+}
+.reply-button {
+    display: block;
+    border: none;
+    padding:1px;
+    margin-bottom:15px;
+}
+.remove-comment-button {
+    border: none;
+    display:block;
+    padding:1px;
+}
+
+.addComment a {
+    text-decoration: none;
+    font-size:18px;
+}
+
+.notesList {
+    margin-top:20px;
+    max-width: 100%;
+}
+
+.note {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding:2px;
+    font-family: 'Sriracha', cursive;
+    font-size:18px;
+    margin-bottom:10px;
+    padding:5px;
+}
+.note span {
+    display: block;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+

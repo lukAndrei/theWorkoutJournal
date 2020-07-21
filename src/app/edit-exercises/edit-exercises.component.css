@@ -1,0 +1,180 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input {
+    text-align: center;
+}
+.edit-ex-container {
+    display:flex;
+    flex-direction: row;
+    width: 500px;
+    justify-content: space-between;
+
+}
+.exercise-container{
+    vertical-align: top;
+    width: 175px;
+}
+.exercise-data-container{
+    vertical-align: top;
+    width:300px;
+    justify-content: flex-end;
+
+}
+.form-group{
+    margin-bottom:0px;
+}
+.exercise-list{
+    min-height:60px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 20px;
+}
+.selected {
+    font-size:24px;
+}
+.selected span {
+    color:#ff69b4;
+
+}
+.card {
+    border-radius:5px;
+    border: none;
+}
+.card-title input {
+    font-size:20px;
+    font-family: 'Sriracha', cursive;    
+    border-top:none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #ff80bf;
+    text-align: left;
+    border-radius:0px;
+}
+
+.exercise-box {
+    padding: 10px 10px;
+    font-family: 'Sriracha', cursive; 
+    border-bottom: 2px solid #f2f2f2;;
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-top:20px;
+    margin-bottom:15px;
+    font-family: 'Sriracha', cursive;    
+    border-bottom:1px solid #f2f2f2; 
+    padding:5px;  
+
+}
+
+.control-buttons button{
+    border:none;
+    margin-left:10px;
+}
+.control-buttons span{ 
+    display: inline-block;
+    vertical-align: middle;
+} 
+.data-box {
+    display:flex;
+    margin-bottom:25px;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Sriracha', cursive; 
+    border-bottom:2px solid #f2f2f2; 
+    padding:10px;
+}
+.data-box-2 {
+    display:flex;
+    margin-bottom:25px;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Sriracha', cursive; 
+    padding:5px;
+}
+
+.text-box{
+    padding:0px;
+    display:flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.text-box span{
+    display: block;
+    width:50px;
+}
+.text-box-2{
+    padding:0px;
+    display:flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.text-box-2 span{
+    display: block;
+}
+
+.time-input {
+    font-family: 'Sriracha', cursive; 
+}
+.time-box {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right:10px;
+
+}
+.time-box input {
+    width:50px;
+}
+
+.weight-box {
+    margin-left:5px;
+}
+
+.weight-box  input{
+    width:60px;
+}
+.reps-box {
+    margin-left:5px;
+}
+.reps-box  input{
+    width:60px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+}
+.units-box {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+.delete-button {
+    width:100%;
+}
+
+.delete-button button {
+    border: none;
+    display: block;
+    margin:auto;
+    font-size: 16px;
+    font-family: 'Sriracha', cursive; 
+
+}
+.card-footer {
+    width:80%;
+    margin:auto;
+    background-color: white;
+    border-color: #ff80bf
+}
+
+

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthServiceService } from './services/auth-service.service';
 import { CurrentUserService } from './services/current-user.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',

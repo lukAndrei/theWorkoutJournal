@@ -10,6 +10,9 @@ export class CurrentUserService {
   setUser(currentUser:AppUser){
     localStorage.setItem('currentUser', JSON.stringify(currentUser))
   }
+  removeUser(){
+    localStorage.removeItem('currentUser')
+  }
   getCurrentUser():AppUser{
     return JSON.parse(localStorage.getItem('currentUser'))
   }

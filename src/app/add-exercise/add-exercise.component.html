@@ -1,33 +1,15 @@
+    <div class="add-exercise">
+        <button   (click)="addNewExercise=!addNewExercise" class="btn btn-outline-primary exercise-button">
+           Create exercise
+        </button>
+        <form *ngIf="addNewExercise" #f="ngForm" (ngSubmit)="addExercise(f.value)">
+                 <div class="form-group">
+                     <input ngModel  #exerciseName="ngModel" name="exercise" class="form-control" type="text" placeholder="Exercise name" required>
+                  </div>         
+            <button style="margin-top:30px;" [disabled]="!f.valid" type="submit" class="btn btn-outline-primary btn-block ">Add exercise</button>          
+         </form>
+    </div>
 
-    <button style="width:150px;" (click)="addNewExercise=!addNewExercise" class="btn btn-outline-dark">New exercise</button>
-    <form *ngIf="addNewExercise" #f="ngForm" (ngSubmit)="addExercise(f.value)">
-        <div class="exercise">
-             <div class="form-group">
-                 <label for="exercise"></label>
-                 <input ngModel [(ngModel)]="exercise.name" #exerciseName="ngModel" name="exercise" class="form-control" type="text" placeholder="exercise" required>
-              </div>
-             <div class="d-flex p-2 control-buttons">
-                 <button type="button" (click)="addSet()" class="btn btn-sm btn-info">add set</button>
-                 <button type="button" (click)="removeSet()" class="btn btn-sm btn-info">remove set</button>
-             </div>
-             <div class="d-flex p-2"  *ngFor="let set of exercise.sets; index as i">
-                     <ul class="list-group inputList">
-                         <li  class="list-group-item">Set {{ i+1 }}</li>
-                         <li  class="list-group-item">
-                             <div class="d-inline-flex p-2">
-                                 <div  class="form-group exInputData">
-                                  <label for="reps">Reps</label>
-                                  <input [(ngModel)]="set.reps" (change)="setReps(i,reps.value)" #reps name="reps-{{i}}" class="form-control" type="number" placeholder="reps">
-                                 </div>
-                                 <div class="form-group exInputData">
-                                  <label for="weight">Weight</label>
-                                  <input [(ngModel)]="set.weight" (change)="setWeight(i,weight.value)" #weight="ngModel" name="weight-{{i}}" type="number" class="form-control" placeholder="weight">
-                                 </div>
-                             </div>
-                         </li>  
-                     </ul>
-             </div>           
-        </div>
-        <button [disabled]="!f.valid" type="submit" class="btn btn-primary">Add ex</button>
-     </form>
+
+
 

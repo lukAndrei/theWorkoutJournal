@@ -1,1 +1,88 @@
-<p>home works!</p>
+<div class="container">
+  <div class="container-workouts">
+    <div class="workout-box" *ngFor="let workout of workouts;index as k">
+        <div class="card">
+          <a class="header-link" [routerLink]="['/workout/', workout.id]">
+            <div class="card-header">
+              <span>{{ workout.timestamp | date : 'MM.dd.yyyy'}}</span>
+              <span>{{ currentUser.firstName}}</span>
+            </div>
+          </a>
+            <div class="card-body">
+              <div class="workout-title">
+                <a [routerLink]="['/workout/', workout.id]" href="" class=""> <span>{{workout.name}}</span></a>
+              </div>
+              <div *ngFor="let superset of workout.superSetList; index as s" class="superset-box">
+                  <div  class="superset-ex-list">
+                    <div *ngFor="let ex of superset.exerciseList" class="superset-ex-box">
+                      <div class="ex-name">
+                        <div *ngIf="ex.sets.length==1" class="reps-1">
+                          <div *ngFor="let set of ex.sets">
+                            <span>{{set.reps}} {{ ex.name }}</span>
+                          </div>
+                        </div>
+                        <div *ngIf="ex.sets.length>1" class="reps-2">
+                          <a attr.data-target="#ex-{{ex.id}}" data-toggle="collapse"><span>{{ex.name}}</span></a>
+                        </div>
+                      </div>
+                      <div attr.id="ex-{{ex.id}}" class="ex-collapse collapse">
+                        <div class="sets-box">
+                          <div *ngIf="ex.units !='bw' && ex.units !='miles' && ex.units !='km'" class="sets">
+                            <div class="reps" *ngFor="let set of ex.sets">
+                                <span>{{set.reps}} reps</span>
+                                <span>@ {{ set.weight }}</span>
+                                <span>{{ ex.units }}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="ex.units=='bw'" class="sets">
+                            <div class="reps" *ngFor="let set of ex.sets">
+                                <span>reps</span>
+                                <span>{{set.reps}}</span>
+                            </div>
+                        </div>
+                        <div class="sets" *ngIf="ex.units =='miles' || ex.units =='km' ">
+                            <div class="reps" *ngFor="let set of ex.sets">
+                                <span>{{ set.weight }}</span>
+                                <span>{{ ex.units }}</span>                                            
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="superset-data">
+                    <div *ngIf="superset.rounds>1" class="rounds-box">
+                          <span>X {{superset.rounds}} rounds</span>
+                  </div>
+                  <div class="time-box">
+                        <div *ngIf="superset.time.hours>0" class="time-text">
+                            <span> {{superset.time.hours}} h</span>
+                        </div>
+                        <div *ngIf="superset.time.minutes>0" class="time-text">
+                            <span> {{superset.time.minutes}} min </span>
+                        </div>
+                        <div *ngIf="superset.time.seconds>0" class="time-text">
+                            <span> {{superset.time.seconds}} sec</span>
+                        </div>
+                  </div>
+                  <div class="notesList">
+                    <div *ngFor="let note of superset.notes;index as n">
+                        <div class="note">
+                            <span>{{note}}</span>
+                        </div>
+                    </div>
+                </div>
+                  </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="card-details">
+                <a [routerLink]="['/workout/', workout.id]" href="#">See more</a>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+</div>
+
+

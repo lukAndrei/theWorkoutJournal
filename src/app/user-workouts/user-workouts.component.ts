@@ -1,8 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GetUserWorkoutsService } from '../services/get-user-workouts.service';
 import { WorkoutModel } from '../models/workout.model';
-import { flatMap, switchMap, mergeMap, map, mergeAll, tap, toArray, concatMap, take } from 'rxjs/operators';
-import { Observable, Subscription, from, forkJoin, combineLatest, of, concat } from 'rxjs';
+import {  map, switchMap, flatMap } from 'rxjs/operators';
+import { Subscription, from } from 'rxjs';
+import { RemoveWorkoutsService } from '../services/remove-workouts.service';
+import { WorkoutSubscriptionServiceService } from '../services/workout-subscription-service.service';
+import { AppUser } from '../models/appUser.model';
+import { CurrentUserService } from '../services/current-user.service';
 
 
 @Component({
@@ -11,42 +15,31 @@ import { Observable, Subscription, from, forkJoin, combineLatest, of, concat } f
   styleUrls: ['./user-workouts.component.css']
 })
 export class UserWorkoutsComponent implements OnInit, OnDestroy {
-  workoutsList: WorkoutModel[] = [];
-  workoutsSubscription: Subscription;
-  exerciseSubscription: Subscription;
-  superSetSubscription: Subscription;
-  workout: WorkoutModel
-  constructor(private getUserWorkouts: GetUserWorkoutsService) { 
+  workouts: WorkoutModel[] = [];
+  workoutsSubsbscription: Subscription;
+  currentUser: AppUser;
 
-      this.getUserWorkouts.getWorkouts()
-      .pipe(
-        switchMap(wList=>{
-          this.workoutsList=wList
-          return from(this.workoutsList)}
-          ),
-        mergeMap(workout=>{
-          return this.getUserWorkouts.getWorkoutExercises(workout.id).pipe(switchMap(exList=>{
-            workout.exerciseList = exList
-            return of(workout)
-          }))
-        }),
-        mergeMap(workout=>{
-          return this.getUserWorkouts.getWorkoutSuperSets(workout.id).pipe(switchMap(setList=>{
-            workout.superSet = setList
-            return of(workout)
-          }))
-        })
-      )
-      .pipe(take(1))
-    .subscribe(res=>{
-        console.log(this.workoutsList)
-      })
-     }
+  constructor(private getUserWorkouts: GetUserWorkoutsService,
+     private removeWorkoutsService: RemoveWorkoutsService,
+      private workoutSubscriptionService: WorkoutSubscriptionServiceService,
+      private currentUserService: CurrentUserService) {
+      this.currentUser = this.currentUserService.getCurrentUser()
+       this.workoutsSubsbscription = this.getUserWorkouts.createUserWorkoutsList(this.currentUser.uid)
+        .subscribe(workouts=>{
+           this.workouts=workouts
+           console.log(this.workouts)
+          })
+     } 
     
   ngOnInit() {
-
   }
+
   ngOnDestroy(){
+    this.workoutsSubsbscription.unsubscribe()
+  }
+
+  deleteWorkout(workoutId){
+    this.removeWorkoutsService.deleteWorkout(workoutId)
   }
 
 }

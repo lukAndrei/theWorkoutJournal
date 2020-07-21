@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterServiceService } from '../services/register-service.service';
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
   selector: 'create-account',
@@ -8,7 +9,8 @@ import { RegisterServiceService } from '../services/register-service.service';
 })
 export class CreateAccountComponent {
 
-  constructor(private registerService: RegisterServiceService) { }
+
+  constructor(private registerService: RegisterServiceService, private authService: AuthServiceService) { }
 
   registerUserWithEmailPassword(userData){
     console.log(userData)
@@ -17,6 +19,8 @@ export class CreateAccountComponent {
     this.registerService.registerUserWithEmailPassword(userData)
   }
 
-  
+  googleLogin(){
+    return this.authService.googleLogin()
+  }
 
 }

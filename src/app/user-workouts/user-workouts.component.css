@@ -1,0 +1,175 @@
+.container{
+    margin-top: 10px;
+}
+.container-workouts {
+    display:flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+    flex-wrap: wrap-reverse;
+    padding:5px;
+}
+.card {
+    width:500px;
+    margin:20px;
+    border-radius:10px;
+    border:1px solid #ccc; 
+}
+.card-header {
+    width:80%;
+    margin:auto;
+    font-family: 'Sriracha', cursive;
+    font-size:18px;
+    background-color: white;
+    display:flex;
+    justify-content: space-around;
+    border-color:#ff80bf
+}
+.card-header span {
+    display:block;
+    max-width:100%;
+}
+.header-link {
+    color: inherit;
+    text-decoration: none;
+}
+.header-link:hover, .header-link:focus,header-link:active  {
+    color: #1E90FF
+}
+.card-body{
+    padding:10px;
+}
+.workout-title {
+    text-align: center;
+    font-family: 'Sriracha', cursive;
+    font-size:18px;
+}
+.workout-title > span {
+    display:block;
+}
+.workout-title > a {
+    color: inherit;
+    text-decoration: none;
+}
+.workout-title>a:hover, .workout-title>a:focus, .workout-title>a:active {
+    color: #1E90FF;
+}
+.card-body button{
+    display: block;
+    border: none;
+    font-family: 'Sriracha', cursive;
+    margin:auto; 
+}
+.card-footer{
+    width:80%;
+    margin:auto;
+    font-family: 'Roboto', sans-serif;
+    font-size:17px;
+    border-color:#ff80bf;
+    background-color:white
+}
+.card-footer a {
+    color: #1E90FF
+}
+.superset-box{
+    display:flex;
+    justify-content: flex-start;
+
+}
+.superset-ex-list {
+  padding:5px;
+  width: 50%;
+  text-align: center;
+
+}
+.superset-ex-box {
+    margin-bottom:10px;
+}
+.superset-data {
+  display:flex;
+  flex-direction: column;
+  padding:5px;
+  width:50%;
+  font-family: 'Sriracha', cursive;
+  justify-content: center;
+}
+.time-box {
+    display:flex;
+    justify-content: center;
+    font-size:18px;
+    padding:5px;
+}
+.time-text {
+    margin-right:10px;
+}
+.rounds-box{
+    display:flex;
+    justify-content: center;
+    margin-bottom:20px;
+    margin-top:5px;
+    padding:5px;
+    font-size:16px;
+
+}
+.rounds-box span {
+    display: block;
+}
+.reps {
+    display:flex;
+    font-size:16px;
+    margin-top:10px;
+    font-family: 'Noto Serif', serif;
+    justify-content: center;
+
+}
+.reps span {
+    display: block;  
+    margin-right:5px;
+}
+
+.ex-name {
+    font-size: 20px;
+    font-family: 'Sriracha', cursive;
+    padding:5px;
+
+}
+.reps-2 a {
+    cursor: pointer;
+    padding:5px 15px;     
+}
+.reps-2 a:hover{
+    background-color: #f2f2f2 ;
+    border-radius: 5px;
+}
+
+.edit-button{
+    display:block;
+    margin:auto;
+    border:none;
+    font-family: 'Sriracha', cursive;
+    font-size:16px;
+
+}
+
+.notesList {
+    margin-top:20px;
+    max-width: 100%;
+}
+
+.note {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding:2px;
+    font-family: 'Sriracha', cursive;
+    font-size:18px;
+    margin-bottom: 10px;
+    border-radius:5px;
+    padding:5px;
+
+}
+.note span {
+    display: block;
+    word-wrap: break-word;
+    overflow: hidden;
+}

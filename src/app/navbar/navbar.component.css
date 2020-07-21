@@ -1,0 +1,35 @@
+nav{
+    margin:auto;
+    border-bottom: 2px solid #f8f9fa;
+    background-color: white;
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1)
+}
+.navbar-brand {
+    font-size:24px;
+    font-family: 'Sriracha', cursive;
+
+}
+.navbar-brand span {
+    display: block;
+    background-color: #ff80bf;
+    padding-left:10px;
+    padding-right:10px;
+    color: white;
+    border-radius: 20px;
+    text-decoration-color: white;
+}
+.navbar-brand a {
+    text-decoration: none;
+    color: white;
+}
+
+.navbar-collapse > ul.navbar-nav > li.nav-item > a  {
+    font-size:17px; 
+    font-family: 'Roboto', sans-serif;}
+
+
+.navbar-collapse > ul.navbar-nav > li.nav-item > .dropdown-menu > a {
+    font-size:17px;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}

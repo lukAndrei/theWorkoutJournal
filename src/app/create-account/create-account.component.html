@@ -3,24 +3,31 @@
         <div class="form-group">
             <label for="firstName">First Name</label>
             <input #firstName="ngModel" ngModel name="firstName" type="text" class="form-control" id="firstName" aria-describedby="firstNameInput" required>
-            <div class="alert alert-danger" *ngIf="firstName.touched && firstName.invalid">You need the password</div>
+            <div class="alert alert-danger" *ngIf="firstName.touched && firstName.invalid">first name</div>
         </div>
         <div class="form-group">
             <label for="lastName">Last Name</label>
             <input #lastName="ngModel" ngModel name="lastName" type="text" class="form-control" id="lastName" aria-describedby="lastNameInput" required>
-            <div class="alert alert-danger" *ngIf="lastName.touched && lastName.invalid">You need the password</div>
+            <div class="alert alert-danger" *ngIf="lastName.touched && lastName.invalid">last name</div>
         </div>
         <div class="form-group">
-            <label for="email">Email Address</label>
-            <input #email="ngModel" ngModel name="email" type="email" class="form-control" id="email" aria-describedby="emailInput" required>
+            <label for="email-account">Email Address</label>
+            <input #email="ngModel" ngModel name="email" type="email" class="form-control" id="email-account" aria-describedby="emailInput" required>
             <small id="emailInput" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            <div class="alert alert-danger" *ngIf="email.touched && email.invalid">You need the password</div>
+            <div class="alert alert-danger" *ngIf="email.touched && email.invalid">Please provide email adress</div>
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
-            <input #password="ngModel" ngModel name="password" type="password" class="form-control" id="password" aria-describedby="passwordInput" required minlength="6">
-            <div class="alert alert-danger" *ngIf="password.touched && password.invalid">You need the password</div>
+            <label for="password-account">Password</label>
+            <input #password="ngModel" ngModel name="password" type="password" class="form-control" id="password-account" aria-describedby="passwordInput" required minlength="6">
+            <div class="alert alert-danger" *ngIf="password.touched && password.invalid">Please provide a password</div>
         </div>
-        <button [disabled]="!f.valid" type="submit" class="btn btn-primary">Submit</button>
+        <button [disabled]="!f.valid" type="submit" class="btn btn-outline-info">Create account</button>
     </form>
+    <div class="text">
+        <span>Or</span>
+    </div>
+    <div class="google-login">
+        <span><img class="img-responsive" src="assets/images/google-icon.png"></span>
+        <button type="button" (click)="googleLogin()" class="btn btn-outline-info">Login with google</button>
+    </div>
 </div>

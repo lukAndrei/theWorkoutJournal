@@ -1,15 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { WorkoutModel } from '../models/workout.model';
+import {  map, switchMap, flatMap } from 'rxjs/operators';
+import { Subscription, from } from 'rxjs';
+import { GetUserWorkoutsService } from '../services/get-user-workouts.service';
+import { CommentsServiceService } from '../services/comments-service.service';
+import { CurrentUserService } from '../services/current-user.service';
+import { AppUser } from '../models/appUser.model';
+import { WorkoutSubscriptionServiceService } from '../services/workout-subscription-service.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-
-  constructor() { }
+export class HomeComponent implements OnInit, OnDestroy {
+  workouts: WorkoutModel[] = [];
+  workoutsSubsbscription: Subscription;
+  currentUser: AppUser;
+  constructor(private getUserWorkouts: GetUserWorkoutsService, private commentsService: CommentsServiceService, 
+    private getCurrentUserService: CurrentUserService,
+    private workoutSubscriptionService: WorkoutSubscriptionServiceService
+    ) {
+      
+    this.currentUser = this.getCurrentUserService.getCurrentUser()
+    
+    this.workoutsSubsbscription = this.getUserWorkouts.createAllWorkoutsList()
+      .subscribe(workouts=>{
+        this.workouts=workouts
+        console.log(this.workouts)
+      })
+   }
 
   ngOnInit() {
+  }
+  ngOnDestroy(){
+    this.workoutsSubsbscription.unsubscribe()
   }
 
 }

@@ -1,29 +1,39 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">TheWorkoutJournal</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <ng-template #anonymousUser>
-         <li class="nav-item active">
-           <a class="nav-link" routerLink="/login">Login</a>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <div class="navbar-brand">
+        <a  routerLink="/home">
+          <span>TWj</span></a>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <ng-template #anonymousUser>
+           <li class="nav-item active">
+             <a class="nav-link" routerLink="/login">Login</a>
+            </li>
+           <li class="nav-item active">
+            <a class="nav-link" routerLink="/create-account">Create account</a>
+            </li>
+          </ng-template>
+          <li *ngIf="user; else anonymousUser" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ user.firstName }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" routerLink="/create-workout">Create workout</a>
+              <a class="dropdown-item" routerLink="/user-workouts">My workouts</a>
+              <a class="dropdown-item" style="margin-top:20px;" (click)="logout()" routerLink="/">Logout</a>
+            </div>
           </li>
-         <li class="nav-item active">
-          <a class="nav-link" routerLink="/create-account">Create account</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link " href="#" routerLink="/create-workout">
+              Create workout
+            </a>
           </li>
-        </ng-template>
-        <li *ngIf="user; else anonymousUser" class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ user.firstName }}
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" routerLink="/create-workout">Create workout</a>
-            <a class="dropdown-item" routerLink="/user-workouts">My workouts</a>
-            <a class="dropdown-item" (click)="logout()" routerLink="/">Logout</a>
-          </div>
-        </li>
-        
-      </ul>
+        </ul>
+      </div>
     </div>
   </nav>
+

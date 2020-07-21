@@ -1,0 +1,77 @@
+    <div class="edit-ex-container">
+        <div class="exercise-container">
+            <div class="exercise-list">
+                <div 
+                (click)="changeExercise(ex,k)" 
+                *ngFor="let ex of workout.exerciseList;index as k" 
+                class="exercise-box"
+                [class.selected]="selectedExercise == ex"
+                >
+                <span>{{ex.name}}</span>
+                </div>
+            </div>
+        </div>
+        <div @expandCollapsed *ngIf="exercise" class="exercise-data-container">
+                <div class="card exercise-data-box">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <input [(ngModel)]="exercise.name" (change)="setName(name.value)" #name name="name" class="form-control" type="text">
+                        </div>
+                        <div class="control-buttons">
+                            <div class="text-box">
+                                <span>sets</span>
+                            </div>
+                            <button type="button" (click)="addSet(exercise)" class="btn btn-sm btn-outline-primary"><span class="material-icons">add</span></button>
+                            <button type="button" (click)="removeSet(exercise)" class="btn btn-sm btn-outline-primary"><span class="material-icons">remove</span></button>
+                        </div>
+                        <div class="data-box" *ngFor="let set of exercise.sets;index as i">
+                            <div class="text-box">
+                                <span>S {{ i+1 }}</span>
+                            </div>
+                            <div class="text-box-2">
+                                <span>reps</span>
+                            </div>
+                           <div class="form-group reps-box">
+                               <input [(ngModel)]="set.reps" (change)="setReps(i,reps.value)" #reps name="reps-{{i}}" class="form-control" type="number" placeholder="reps" onKeyPress="if(this.value.length==3) return false">
+                           </div>
+                           <div style="margin-left:20px;" *ngIf="exercise.units" class="text-box-2">
+                            <span>{{exercise.units}}</span>
+                            </div>
+                           <div *ngIf="exercise.units != 'bw'" class="form-group weight-box">
+                               <input [(ngModel)]="set.weight" (change)="setWeight(i,weight.value)" #weight="ngModel" name="weight-{{i}}" type="number" class="form-control" onKeyPress="if(this.value.length==3) return false" placeholder="weight" maxlength="3">
+                           </div>
+                        </div>
+                        <div class="form-group data-box-2">
+                            <div class="units-box">
+                                <span for="Units">units</span>
+                             <select  [(ngModel)]="exercise.units" (change)="setUnits(units.value)" #units="ngModel" name="units" class="form-control"  id="units">
+                                 <option *ngFor="let unit of unitsArray" >{{ unit }}</option>
+                            </select>
+                            </div>
+                       </div>
+                        <div class="form-group time-input">
+                            <div class="data-box-2">
+                                <div class="time-box">
+                                    <span>h</span>
+                                    <input [(ngModel)]='exercise.time.hours' onKeyPress="if(this.value.length==2) return false" type="number" class="form-control" #timeHours placeholder="" name='hours' maxlength="2">
+                                </div>
+                                <div class="time-box">
+                                    <span>min</span>
+                                    <input [(ngModel)]='exercise.time.minutes' onKeyPress="if(this.value.length==2) return false" type="number"  class="form-control" #timeMinutes placeholder="" name='minutes' maxlength="2">
+                                </div>
+                                <div class="time-box">
+                                    <span>sec</span>
+                                    <input [(ngModel)]='exercise.time.seconds' onKeyPress="if(this.value.length==2) return false" type="number" class="form-control" #timeSeconds placeholder="" name='seconds' maxlength="2">
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="delete-button">
+                            <button type="button" (click)="removeExercise()" class="btn btn-outline-primary">remove</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+

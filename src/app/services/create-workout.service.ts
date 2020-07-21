@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { WorkoutModel } from '../models/workout.model';
 import { AppUser } from '../models/appUser.model';
 import { CurrentUserService } from './current-user.service';
+import { GenerateWorkoutJsonService } from './generate-workout-json.service';
 
 
 @Injectable({
@@ -10,59 +10,48 @@ import { CurrentUserService } from './current-user.service';
 })
 export class CreateWorkoutService {
   currentUser: AppUser;
-  constructor(private db: AngularFirestore, private currentUserService: CurrentUserService) { 
+ 
+  constructor(private db: AngularFirestore, private currentUserService: CurrentUserService, private generateWorkoutJSON: GenerateWorkoutJsonService) { 
     this.currentUser = this.currentUserService.getCurrentUser();
+
   }
 
-  submitEx(f, workout: WorkoutModel){
+  submitWorkout(workoutJSON){
+    let workoutInfo = workoutJSON.workoutInfo;
+    let superSetListData = workoutJSON.setList;
 
-    workout.name = f.workoutName;
-    workout.type = f.workoutType;
+    let userWorkoutRef = this.db.collection('/users').doc(this.currentUser.uid).collection('/workout').doc(workoutInfo.id);
+    let workoutRef = this.db.collection('/workouts').doc(workoutInfo.id);
 
-    let exList = workout.exerciseList;
-    let superSetList = workout.superSet;
-
-    workout.id = this.db.createId();
-    let workoutRef = this.db.collection('/users').doc(this.currentUser.uid).collection('/workout').doc(workout.id)
-    let exRef = workoutRef.collection('/exercises');
+    let userSuperSetRef = userWorkoutRef.collection('/superSets')
     let superSetRef = workoutRef.collection('/superSets')
 
-    let workoutInfo = {
-      name: workout.name || '',
-      type: workout.type || '',
-      id: workout.id,
-      date: Date.now()
-    }
-    workoutRef.set(workoutInfo, {merge:true})
+    userWorkoutRef.set(workoutInfo)
+    workoutRef.set(workoutInfo)
 
-    exList.forEach(ex => {
-      let exData = {
-        exName: ex.name,
-        set: ex.sets,
-        totalReps: ex.totalReps,
-        totalSets: ex.totalSets,
-        id: ex.id
-      }
-      exRef.doc(ex.id).set(exData, {merge:true});
-    });
+    superSetListData.forEach(setData=>{
+      userSuperSetRef.doc(setData.id).set(setData)
+      superSetRef.doc(setData.id).set(setData)
+    })
 
-    superSetList.forEach(set => {
-        let superSetData = {
-          rounds: set.rounds,
-          exercises: []
-        }
-        set.exerciseList.forEach(ex=>{
-          let exModel = {
-            exName: ex.name,
-            set: ex.sets,
-            totalReps: ex.totalReps,
-            totalSets: ex.totalSets,
-            id:ex.id
-          }
-          superSetData.exercises.push(exModel)
-        })
-        superSetRef.doc(this.db.createId()).set(superSetData,{merge: true})
-    });
   }
+  updateWorkout(workoutJSON){
+    let workoutInfo = workoutJSON.workoutInfo;
+    let superSetListData = workoutJSON.setList;
+
+    let userWorkoutRef = this.db.collection('/users').doc(this.currentUser.uid).collection('/workout').doc(workoutInfo.id);
+    let workoutRef = this.db.collection('/workouts').doc(workoutInfo.id);
+    let userSuperSetRef = userWorkoutRef.collection('/superSets');
+    let superSetRef = workoutRef.collection('/superSets')
+
+    userWorkoutRef.set(workoutInfo)
+    workoutRef.set(workoutInfo)
+
+    superSetListData.forEach(setData=>{
+      userSuperSetRef.doc(setData.id).set(setData)
+      superSetRef.doc(setData.id).set(setData)
+    })
+  }
+
 }
 

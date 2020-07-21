@@ -1,45 +1,114 @@
-import { Component, OnInit, Input, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { ExerciseModel} from '../models/exercise.model';
 import { WorkoutModel } from '../models/workout.model';
-import { Observable } from 'rxjs';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AppUser } from '../models/appUser.model';
 import { CurrentUserService } from '../services/current-user.service';
 import { CreateWorkoutService } from '../services/create-workout.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GetUserWorkoutsService } from '../services/get-user-workouts.service';
+import { GenerateWorkoutJsonService } from '../services/generate-workout-json.service';
+import { Subscription } from 'rxjs';
+import { CreateSuperSetComponent } from '../create-super-set/create-super-set.component';
+import { slideAdd } from '../animations/animations';
+import { slide } from '../animations/animations';
+import { RemoveWorkoutsService } from '../services/remove-workouts.service';
+import { GetCategoriesService } from '../services/get-categories.service';
 
 @Component({
   selector: 'create-workout',
   templateUrl: './create-workout.component.html',
-  styleUrls: ['./create-workout.component.css']
+  styleUrls: ['./create-workout.component.css'],
+  animations: [
+    slide,
+    slideAdd
+  ]
 })
-export class CreateWorkoutComponent implements OnInit {
-  addSuperSet=false;
+export class CreateWorkoutComponent implements OnInit, OnDestroy {
+
+ 
+
+  unitsArray = ['lbs', 'kg', 'bw','km', 'miles'];
+  showExercises = true;
   exerciseList: ExerciseModel[] = [];
   currentUser: AppUser;
+  workoutId;
+  workout: WorkoutModel  
+  getUserWorkouts: any;
+  workoutSubscription: Subscription;
+  tempSuperSetList = [];
+  categories;
+  categoriesSubscription: Subscription;
+  newCategory = false;
 
-  @ViewChildren("superSetCheckBox") superSetCheckBox: QueryList<ElementRef>
-  @Input() workout = new WorkoutModel(this.exerciseList);
-  
+  @ViewChild(CreateSuperSetComponent, {static: false})
+  private superSetComponent: CreateSuperSetComponent;
+
   constructor(
     private currentUserService:CurrentUserService, 
     private db:AngularFirestore, 
     private createWorkoutService: CreateWorkoutService,
-    private router: Router
-    ) { 
+    private getUserWorkoutsService: GetUserWorkoutsService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private generateWorkoutJSON: GenerateWorkoutJsonService,
+    private removeWorkoutsService: RemoveWorkoutsService,
+    private getCategoriesService: GetCategoriesService
+    ){ 
+    this.categoriesSubscription = this.getCategoriesService.getCategories().subscribe(c => this.categories=c)
     this.currentUser = this.currentUserService.getCurrentUser();
+    this.workoutId = this.route.snapshot.paramMap.get('id')
+    this.workout = new WorkoutModel(this.exerciseList); 
+    this.workoutSubscription = this.getUserWorkoutsService.createUserWorkoutsList(this.currentUser.uid).subscribe(workouts=>{
+      let searchedWorkout = workouts.filter(w=>w.id == this.workoutId)[0]
+      if (searchedWorkout) this.workout = searchedWorkout
+    }) 
   }
   
   ngOnInit() {
+
   }
 
-  removeExercise(index,ex){
-    this.workout.removeEx(index)
-    this.workout.removeExFromAll(ex.name)
+  ngOnDestroy(){
+    this.workoutSubscription.unsubscribe();
+    this.categoriesSubscription.unsubscribe();
+  }
+  onSelectCategory(value){
+    if (value == '') this.newCategory = true;
+    else this.newCategory = false;
+    console.log(value)
+  }
+  setDate(evt){
+    this.workout.timestamp = new Date(evt.year, evt.month-1, evt.day)
   }
 
-  submitEx(f){ 
-     this.createWorkoutService.submitEx(f,this.workout)
-     this.router.navigate(['/user-workouts'])
+  submitWorkout(f){
+    this.workout.name = f.workoutName;   
+    console.log(f)
+    if (f.customCategory) {
+      this.getCategoriesService.addCategory(f.customCategory);
+      this.workout.category = f.customCategory
+    }
+    else this.workout.category = f.workoutCategory;
+    console.log(this.workout.category)
+    if (!this.workoutId) {
+      this.workout.id = this.db.createId()
+      let workoutJSON = this.generateWorkoutJSON.generateWorkoutJSON(this.workout)
+      console.log(workoutJSON)
+      this.createWorkoutService.submitWorkout(workoutJSON)
+    }
+    else {
+      this.workout.id = this.workoutId
+      let workoutJSON = this.generateWorkoutJSON.generateWorkoutJSON(this.workout)
+      console.log(workoutJSON)
+      this.createWorkoutService.updateWorkout(workoutJSON)
+    }
+      this.router.navigate(['/user-workouts'])
+  }
+
+  deleteWorkout(){
+    this.removeWorkoutsService.deleteWorkout(this.workoutId);
+    this.removeWorkoutsService.deleteAllWorkout(this.workoutId)
+    this.router.navigate(['/user-workouts'])
   }
 }

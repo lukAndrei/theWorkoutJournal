@@ -10,16 +10,22 @@ import { AuthServiceService } from '../services/auth-service.service';
   styleUrls: ['./add-exercise.component.css']
 })
 export class AddExerciseComponent implements OnInit {
+  unitsArray = ['lbs', 'kg', 'bw','km', 'miles']
   addNewExercise=false;
-  exerciseList: ExerciseModel[] = [];
-  exName=""
+  exName="";
   set  = [{
-      reps: 1,
-      weight: 0
-    }];
-
-  exercise = new ExerciseModel(this.set, this.exName=name);
-  @Input() workout = new WorkoutModel(this.exerciseList);
+    reps: 1,
+    weight: 0,
+  }];
+  units="kg";
+  deleteIndex;
+  time = {
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  }
+  exercise = new ExerciseModel(this.set, this.exName=name, this.units);
+  @Input() workout: WorkoutModel 
 
   constructor(private db: AngularFirestore, authService: AuthServiceService) { 
   }
@@ -29,12 +35,13 @@ export class AddExerciseComponent implements OnInit {
   addExercise(form){
     
     this.exercise.setName(form.exercise);
-    this.exercise.getAllReps();
+    this.exercise.setUnits('kg');
+    this.exercise.setTime(this.time)
     this.exercise.id = this.db.createId();
     this.workout.addEx(this.exercise);
     let newSet = [{
       reps: 1,
-      weight: 0
+      weight: 0,
     }];
     this.exercise = new ExerciseModel(newSet);
     this.addNewExercise=false
@@ -51,10 +58,28 @@ export class AddExerciseComponent implements OnInit {
     reps = Number(reps)
     this.exercise.setReps(i,reps)
   }
-
   setWeight(i,weight:number){
     weight = Number(weight)
     this.exercise.setWeight(i,weight)
+  }
+  setUnits(units:string){
+    this.exercise.setUnits(units)
+  }
+  setDistance(distance){
+    distance = Number(distance)
+    this.exercise.setDistance(distance)
+  }
+  setTime(time){
+    this.exercise.setTime(time)
+  }
+  changeExercise(exercise,k){
+    this.exercise = exercise;
+    this.deleteIndex = k
+    
+  }
+  removeExercise(){
+    this.workout.removeEx(this.deleteIndex)
+    this.workout.removeExFromAll(this.exercise.name)
   }
 
 }

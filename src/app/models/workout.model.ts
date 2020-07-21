@@ -1,20 +1,26 @@
 
 import { ExerciseModel } from '../models/exercise.model'
 import { SuperSetModel } from './superset.model';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { AppUser } from './appUser.model';
+import { WorkoutComment } from './comment.model';
+
 export class WorkoutModel {
     public name: string;
-    public type: string;
     public exerciseList: ExerciseModel[]=[];
-    public superSet: SuperSetModel[] = []
+    public superSetList: SuperSetModel[] = []
     public id;
-    public date;
+    public date: NgbDateStruct;
+    public timestamp: Date;
+    public category: string;
   
-    constructor(exerciseList,name?, type?, id?,date?){
+    constructor(exerciseList,name?, id?,date?, timestamp?, category?){
           this.exerciseList = exerciseList;
           this.name = name;
-          this.type = type;
           this.id = id;
-          this.date = date
+          this.date = date;
+          this.timestamp = timestamp;
+          this.category = category;
     }
 
     static fromJSONlist(a:[]){
@@ -22,45 +28,44 @@ export class WorkoutModel {
     }
     static initiateWorkout(w){
         let emptyExerciseList = []
-        return new WorkoutModel(emptyExerciseList, w.name, w.type, w.id, w.date)
+        let timestamp = w.date.toDate()
+        let workoutDate = ({
+            year: timestamp.getFullYear(),
+            month: timestamp.getMonth(),
+            day: timestamp.getDate()
+        })
+        let category = w.category || ''
+        return new WorkoutModel(emptyExerciseList, w.name, w.id, workoutDate, timestamp, category)
     }
     addEx(exercise:ExerciseModel){
         this.exerciseList.push(exercise)
     }
     addSuperSet(superSet:SuperSetModel){
-        this.superSet.push(superSet)  
+        this.superSetList.push(superSet)  
     }
     addExToSuperSet(index,ex){
-        this.superSet[index].exerciseList.push(ex)
+        this.superSetList[index].exerciseList.push(ex)
     }
     removeExFromSuperSet(index,name){
-        this.superSet[index].exerciseList.forEach((ex,j)=>{
-            if (ex.name==name){
-                this.superSet[index].exerciseList.splice(j,1)
-            }
-            if (this.superSet[index].exerciseList.length==0){
-                this.removeSuperSet(index)
-            }
-        });
+        this.superSetList[index].deleteExFromSet(name);
+        this.updateSuperSetList();
+      
     }
     removeEx(index){
         this.exerciseList.splice(index,1)
     }
     removeSuperSet(index){
-        this.superSet.splice(index,1)
+        this.superSetList.splice(index,1)
     }
-    removeExFromAll(name){
-        this.superSet.forEach((set,i)=>{
-            set.exerciseList.forEach((ex,j)=>{
-                if (ex.name==name){
-                    this.superSet[i].exerciseList.splice(j,1)
-                }
-            })
-            if (set.exerciseList.length==0){
-                this.removeSuperSet(i)
-            }
-        })
 
+    removeExFromAll(exercise){
+          this.superSetList.map((superSet, index)=>{
+             superSet.deleteExFromSet(exercise)
+         })
+         this.updateSuperSetList()
     }
- 
+    updateSuperSetList(){
+        this.superSetList = this.superSetList.filter(superSet=>superSet.exerciseList.length>0)
+    }
+
 }

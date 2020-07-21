@@ -1,0 +1,134 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header"><span>{{ workout.timestamp | date : 'MM.dd.yyyy'}}</span>
+          <span>{{workout.name}}</span>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let superset of workout.superSetList; index as s" class="superset-box">
+              <div  class="superset-ex-list">
+                <div *ngFor="let ex of superset.exerciseList" class="superset-ex-box">
+                  <div class="ex-name">
+                    <div *ngIf="ex.sets.length==1" class="reps-1">
+                      <div *ngFor="let set of ex.sets">
+                        <span>{{set.reps}} {{ ex.name }}</span>
+                      </div>
+                    </div>
+                    <div *ngIf="ex.sets.length>1" class="reps-2">
+                      <span>{{ex.name}}</span>
+                    </div>
+                  </div>
+                    <div class="sets-box">
+                      <div *ngIf="ex.units !='bw' && ex.units !='miles' && ex.units !='km' && ex.sets.length>1" class="sets">
+                        <div class="reps" *ngFor="let set of ex.sets">
+                            <span>{{set.reps}} reps</span>
+                            <span>@ {{ set.weight }}</span>
+                            <span>{{ ex.units }}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="ex.units=='bw' && ex.sets.length>1" class="sets">
+                        <div class="reps" *ngFor="let set of ex.sets">
+                            <span>reps</span>
+                            <span>{{set.reps}}</span>
+                        </div>
+                    </div>
+                    <div class="sets" *ngIf="ex.units =='miles' || ex.units =='km' ">
+                        <div class="reps" *ngFor="let set of ex.sets">
+                            <span>{{ set.weight }}</span>
+                            <span>{{ ex.units }}</span>                                            
+                        </div>
+                    </div>
+                    </div>
+                </div>
+              </div>
+              <div class="superset-data">
+                <div *ngIf="superset.rounds>1" class="rounds-box">
+                    <span>rounds {{superset.rounds}}</span>
+              </div>
+              <div class="time-box">
+                    <div *ngIf="superset.time.hours>0" class="time-text">
+                        <span> {{superset.time.hours}} h</span>
+                    </div>
+                    <div *ngIf="superset.time.minutes>0" class="time-text">
+                        <span> {{superset.time.minutes}} min </span>
+                    </div>
+                    <div *ngIf="superset.time.seconds>0" class="time-text">
+                        <span> {{superset.time.seconds}} sec</span>
+                    </div>
+                </div>
+                <div class="notesList">
+                  <div *ngFor="let note of superset.notes;index as n">
+                      <div class="note">
+                          <span>{{note}}</span>
+                      </div>
+                  </div>
+              </div>
+              </div>
+          </div>
+          <div class="comments-box">
+            <div class="comments-link">
+              <a (click)="showComments = !showComments" class="text-info show-comments-button">
+                <div class="comments-span">
+                  <span class="material-icons">comment</span>
+                  <span> {{ comments.length }} comments</span>
+                </div>
+              </a>
+            </div>
+            <form #f="ngForm" (ngSubmit)="addComment(workout, comment.value); f.reset()">
+              <div class="form-group commentForm">
+                <textarea ngModel #comment class="form-control" rows="3" placeholder="" name="comment" required></textarea>
+            </div>
+                <button [disabled]="!f.valid" type="submit" class="btn btn-outline-info">post</button> 
+            </form>
+            <div *ngIf="showComments" class="show-comments">
+              <div *ngFor="let comm of comments;index as n" class="comments">
+                <div class="user-account">
+                  <div class="user-picture">
+                    <span class="material-icons">account_box</span>
+                  </div>
+                  <div class="comment">
+                    <div class="user">
+                      <span>{{ comm.user.firstName }}</span>
+                      <span style="margin-left:10px;">{{ comm.timestamp | date : 'MM.dd.yyyy' }}</span>
+                    </div>
+                    <div class="user-comment">
+                      <span>{{ comm.comment}}</span>
+                    </div>
+                    <button *ngIf="comm.user.uid == currentUser.uid" type="button" class="btn btn-outline-info remove-comment-button">remove</button>
+                  </div>
+                </div>
+                    <div *ngFor="let reply of comm.replies;index as k" class="replies">
+                      <div class="reply-user-account">
+                        <div class="user-picture">
+                          <span class="material-icons">account_box</span>
+                        </div>
+                        <div class="reply-comment">
+                          <div class="user">
+                            <span>{{ reply.user.firstName }}</span>
+                            <span style="margin-left:10px;">{{ comm.timestamp | date : 'MM.dd.yyyy' }}</span>
+                          </div>
+                          <div class="reply">
+                            <span>{{reply.comment}}</span>
+                          </div>
+                          <button *ngIf="comm.user.uid == currentUser.uid" type="button" class="btn btn-outline-info remove-comment-button">remove</button>
+                          <button *ngIf="comm.replies.length>0" type="button" data-toggle="collapse" attr.data-target="#comment-{{n}}" class="btn btn-outline-info reply-button">reply</button>
+                        </div>
+                      </div>
+                    </div>
+                <button *ngIf="comm.replies.length==0" type="button" data-toggle="collapse" attr.data-target="#comment-{{n}}" class="btn btn-outline-info reply-button">reply</button>
+                <div attr.id="comment-{{n}}" class="reply-form collapse">
+                  <div class="current-user">
+                    <span>{{currentUser.firstName}}</span>
+                  </div>
+                  <form #f="ngForm" (ngSubmit)="replyToComment(workout, comm, reply.value); f.reset()">
+                    <div class="form-group replyForm">
+                      <textarea ngModel #reply class="form-control" rows="3" placeholder="" name="reply" required></textarea>
+                  </div>
+                      <button type="submit" [disabled]="!f.valid" class="btn btn-outline-info">post</button> 
+                  </form>
+               </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

@@ -1,24 +1,46 @@
 
-
-.control-buttons {
-    max-width:200px;
-    margin:auto;
-    justify-content: center;
-}
-.exercise {
-    max-width:450px;
-}
-
-.inputList li{
+input {
     text-align: center;
+    font-family: 'Sriracha', cursive;   
+    border-top: none;
+    border-left: none;
+    border-right: none; 
+    border-radius: 0px;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+.container {
+     width: 100%;
 }
 
-.exInputData{
-  
+form {
+    margin-top:20px;
+    width:350px;
+    background-color: white;
+    padding: 10px;
+
+}
+
+.add-exercise{
     margin: auto;
-    text-align: center;
+    max-width:100%;
 }
 
-input{
-    text-align: center;
+.exercise-button{
+    width: 155px;
+    display: block;
+    margin: auto;
+    border: none;
 }
+
+.btn-outline-primary {
+    font-family: 'Sriracha', cursive;  
+    font-size:17px;
+  
+}
+

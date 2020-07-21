@@ -1,47 +1,72 @@
 <div class="container">
-    <form #f="ngForm" (ngSubmit)="submitEx(f.value)">
-        <div class="form-group">        
-            <label for="wodName"></label>
-            <input #workoutName ngModel class="form-control no-border"  type="text" placeholder="name it.." name="workoutName">  
-        </div>
-        <div class="form-group">        
-            <label for="wodType"></label>
-            <input #workoutType ngModel class="form-control" type="text" placeholder="..." name="workoutType">  
-        </div>
-        <button *ngIf="workout.exerciseList.length>0" type="submit" class="btn btn-outline-dark">Submit workout</button>
-    </form>
-    <create-super-set [workout]="workout"></create-super-set>
-        <div class="workout" *ngFor="let ex of workout.exerciseList;index as j">
-            <ul class="list-group list-group-horizontal list-group-flush">
-                <li class="list-group-item border-0">
-                    <button class="btn btn-link" data-toggle="collapse" attr.data-target="#id-{{ex.exId}}">{{ j+1 }}</button>
-                </li>
-                <li class="list-group-item border-0">
-                    <button class="btn btn-link" data-toggle="collapse" attr.data-target="#id-{{ex.exId}}">{{ ex.name }}</button>
-                </li>
-                <li class="list-group-item border-0">
-                    <button type="button" (click)="removeExercise(j,ex)"class="btn btn-link">Remove</button>
-                </li>
-            </ul>
-            <div attr.id="id-{{ex.exId}}" class="collapse">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Set</th>
-                            <th scope="col">Reps</th>
-                            <th scope="col">Weight</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let set of ex.sets; index as i">
-                        <th scope="row">{{ i+1 }}</th>
-                        <td>{{ set.reps }}</td>
-                        <td>{{ set.weight }}</td>
-                    </tbody>
-                </table>
+    <div class="card">
+        <div class="card-header">
+            <div class="header-title">
+                <h5 class="card-title">workout</h5>
             </div>
         </div>
-        <add-exercise [workout]="workout"></add-exercise>
-
-
+        <div class="card-body">
+            <form #f="ngForm" (ngSubmit)="submitWorkout(f.value)">
+                <div class="form-group">        
+                    <input style="height:40px;" #workoutName [(ngModel)]="workout.name" class="form-control no-border"  type="text" placeholder="workout name" name="workoutName">  
+                </div>
+                <div class="form-group">
+                    <select (change)="onSelectCategory($event.target.value)"  #workoutCategory [(ngModel)]="workout.category" name="workoutCategory" class="form-control"  id="workoutCategory">
+                        <option></option>
+                        <option *ngFor="let category of categories" >{{ category.name }}</option>
+                        <option value="">Add a new category</option>
+                    </select>                    
+                </div>
+                <div *ngIf="newCategory" class="form-group">        
+                    <input style="height:40px;" #customCategory ngModel class="form-control no-border"  type="text" placeholder="new category" name="customCategory">  
+                </div>                
+                <div  class="form-group">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="select date" name="dp" (dateSelect)="setDate($event)" [(ngModel)]="workout.date" ngbDatepicker #d="ngbDatepicker" required>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><span style="display:block;" class="material-icons md-18">schedule</span></button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                <div class="d-flex p-2 workout-buttons">
+                    <button [disabled]="!workout.superSetList.length>0 && !workoutId" type="submit" class="btn btn-outline-primary workout-button">Submit</button>
+                    <button *ngIf="workout.superSetList.length>0 && workoutId" type="submit"  class="btn btn-outline-primary workout-button">Update</button>
+                    <button [disabled]="!workoutId" (click)="deleteWorkout()" type="button"  class="btn btn-outline-primary workout-button">remove</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <add-exercise style="margin:auto" [workout]="workout"></add-exercise>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="header-title">
+                <h5 class="card-title">workout exercises</h5>
+            </div>
+            <button *ngIf="!showExercises" (click)="showExercises = !showExercises" type="button"  class="btn btn-outline-primary showExercises">Show exercises</button>
+            <button *ngIf="showExercises" (click)="showExercises = !showExercises" type="button"  class="btn btn-outline-primary showExercises">Hide exercises</button>
+        </div>
+        <div class="card-body">
+            <div *ngIf="showExercises" class="row">
+                <edit-exercises style="margin:auto" [workout]="workout"></edit-exercises>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="header-title">
+                <h5 class="card-title">design workout</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card-body">
+                <create-super-set style="margin:auto" [workout]="workout"></create-super-set>
+            </div>
+        </div>
+    </div>
 </div>
 

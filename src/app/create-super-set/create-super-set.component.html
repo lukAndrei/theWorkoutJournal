@@ -1,44 +1,159 @@
-<div class="form-block">
-    <button *ngIf="workout.exerciseList.length>0" style="width:150px;"  (click)="addSuperSet=!addSuperSet" class="btn btn-outline-dark">Create superset</button>
-    <form *ngIf="addSuperSet" #f="ngForm"  (ngSubmit)="createSuperSet(f.value)">
-        <div class="superSet">
-            <ul *ngFor="let ex of workout.exerciseList;index as j" class="list-group list-group-horizontal list-group-flush">
-                 <li class="list-group-item">
-                    <div class="form-check">
-                        <input [checked]="resetCheckbox" #superSetCheckBox ngModel name="superSetEx" class="form-check-input" [value]=" ex.name " (change)="onCheckBoxChange($event)" type="checkbox">
-                        <label class="form-check-label" for="defaultCheck1">
-                             {{ex.name}}
-                        </label>
+    <div class="form-block">
+        <button *ngIf="workout.exerciseList.length>0" style="margin:0px auto 30px;"  (click)="addSuperSet=!addSuperSet" class="btn btn-outline-primary btn-block">
+        Design workout
+        </button>
+        <form @expandCollapsed *ngIf="addSuperSet" #f="ngForm"  (ngSubmit)="createSuperSet(f.value)">
+            <div class="design-container" cdkDropListGroup>
+                <div class="exercise-container">
+                    <div  
+                        cdkDropList
+                        [cdkDropListData]="workout.exerciseList"
+                        (cdkDropListDropped)="dragDelete($event)"
+                        class="exercise-list">
+                        <div *ngIf="tempSuperSetList.length>0" class="drag-text">
+                            <span>Click or drag & drop exercises here to remove</span>
+                        </div>
+                        <div
+                        cdkDrag
+                        (click)="selectExercise(ex)"
+                         *ngFor="let ex of workout.exerciseList;index as j" class="exercise-box">
+                            {{ ex.name }} 
+                        </div>
                     </div>
-                </li>
-            </ul>
-        </div>
-        <div class="form-group">        
-            <label for="superSetNo"></label>
-            <input ngModel #noOfTimes class="form-control" type="text" placeholder="how many times" name="noOfTimes">  
-        </div> 
-    <button  type="submit" class="btn btn-outline-dark">Create superset</button>
-    </form>
-</div>
-<div class="superSet" *ngFor="let set of workout.superSet; index as s">
-    <div>
-        <ul class="list-group list-group-horizontal list-group-flush">
-            <ul *ngFor="let ex of set.exerciseList" class="list-group list-group-flush">
-                <li class="list-group-item border-0">{{ ex.name }}</li>
-                <li class="list-group-item border-0">{{ ex.totalReps }} reps </li>
-            </ul>
-            <li class="list-group-item border-0">
-                {{ set.rounds }} rounds
-            </li>
-            <li class="list-group-item border-0">
-                <button *ngIf="tempSuperSetList.length==1" (click)="addExerciseToSet(s)"class="btn btn-link">Add exercise to set</button>
-            </li>
-            <li class="list-group-item border-0">
-                <button *ngIf="set.exerciseList.includes(tempSuperSetList[0])" (click)="removeExerciseFromSet(s)"class="btn btn-link">Remove ex from set</button>
-            </li>
-            <li class="list-group-item border-0">
-                <button (click)="removeSuperSet(s)"class="btn btn-link">Remove</button>
-            </li>
-        </ul>
+                </div>
+                <div class="exercise-container">
+                    <div 
+                        cdkDropList
+                        [cdkDropListData]="tempSuperSetList"
+                        (cdkDropListDropped)="drop($event)"
+                        class="workout-list">
+                        <div *ngIf="tempSuperSetList.length==0" class="drag-text">
+                            <span>Click or drag & drop exercises here</span>
+                        </div>
+                        <div
+                        @selectExercise
+                        cdkDrag
+                        (click) = "removeExercise(ex,k)"
+                         *ngFor="let e of tempSuperSetList;index as k" class="drop-box">
+                         {{ e.name }}
+                        </div>
+                    </div>
+                </div>
+            </div>                         
+             <button [disabled]="tempSuperSetList.length==0" type="submit" class="btn btn-outline-primary add-superset-button">
+                <span>Add superset</span>
+            </button>
+        </form>
     </div>
-</div>
+    <div *ngIf="workout.superSetList.length>0" class="card">
+        <div class="card-header">
+            <div class="header-box">
+                 <span>{{workout.timestamp | date: 'EEEE, MMMM d'}}</span>   
+            </div>
+        </div>
+        <div class="card-body">
+            <div *ngFor="let superset of workout.superSetList; index as s" class="superset-box">
+                <div class="superset-ex-container">
+                    <div class="superset-ex-list">
+                        <div *ngFor="let ex of superset.exerciseList" class="superset-ex-box">
+                            <div class="ex-name">
+                                <span>{{ex.name}}</span>
+                            </div>
+                                <div *ngIf="ex.units !='bw' && ex.units !='miles' && ex.units !='km'" class="sets">
+                                    <div class="reps" *ngFor="let set of ex.sets">
+                                        <span>{{set.reps}} reps</span>
+                                        <span>@ {{ set.weight }}</span>
+                                        <span>{{ ex.units }}</span>
+                                    </div>
+                                </div>
+                                <div *ngIf="ex.units=='bw'" class="sets">
+                                    <div class="reps" *ngFor="let set of ex.sets">
+                                        <span>reps</span>
+                                        <span>{{set.reps}}</span>
+                                    </div>
+                                </div>
+                                <div class="sets" *ngIf="ex.units =='miles' || ex.units =='km' ">
+                                    <div class="reps" *ngFor="let set of ex.sets">
+                                        <span>round </span>
+                                        <span>{{set.reps}} </span>
+                                        <span>- {{ set.weight }}</span>
+                                        <span>{{ ex.units }}</span>                                            
+                                    </div>
+                                </div>
+                                <div class="remove-exercise">
+                                    <button (click)="removeExerciseFromSet(superset,ex,s)" class="btn btn-outline-primary remove-ex-button">remove</button>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="edit-ex-container">
+                            <button [disabled]="!tempSuperSetList.length==1" (click)="addExerciseToSet(s)" class="btn btn-outline-primary">Add exercise</button>
+                    </div>
+                </div>
+                <div class="superset-data-container">
+                    <div class="remove-set-box">
+                        <button (click)="removeSuperSet(s,superset.id)"class="btn btn-outline-primary">Remove set</button>
+                    </div>
+                    <div class="rounds-box">
+                        <div class="rounds-button">
+                            <a attr.data-target="#rounds-{{superset.id}}" data-toggle="collapse"  href=""><span>rounds {{superset.rounds}}</span></a>
+                        </div>
+                    </div>
+                    <div attr.id="rounds-{{superset.id}}" class="collapse editRounds">
+                        <input type="number" [(ngModel)]='superset.rounds' onKeyPress="if(this.value.length==3) return false" (change)='setRounds(superset,rounds.value)' class="form-control"  #rounds name='rounds' maxlength="4">
+                    </div>
+                    <div class="time-box">
+                            <a attr.data-target="#time-{{superset.id}}" data-toggle="collapse"  href="">
+                                <div *ngIf="superset.time.hours==0 && superset.time.minutes==0 && superset.time.seconds==0 ">
+                                    <span>set time</span>
+                                </div>
+                                <div class="show-time">
+                                    <div *ngIf="superset.time.hours>0" class="time-text">
+                                        <span> {{superset.time.hours}} h</span>
+                                    </div>
+                                    <div *ngIf="superset.time.minutes>0" class="time-text">
+                                        <span> {{superset.time.minutes}} min </span>
+                                    </div>
+                                    <div *ngIf="superset.time.seconds>0" class="time-text">
+                                        <span> {{superset.time.seconds}} sec</span>
+                                    </div>
+                                </div>
+                            </a>                                
+                    </div>
+                    <div attr.id="time-{{superset.id}}" class="collapse">
+                        <div class="set-time">
+                            <div class="form-group form-time">
+                                <span>h</span>
+                                <input type="number"  onKeyPress="if(this.value.length==2) return false" [(ngModel)]='superset.time.hours'  class="form-control" #timeHours name='hours' maxlength="2">
+                            </div>
+                            <div class="form-group form-time">
+                                <span>min</span>
+                                <input type="number" onKeyPress="if(this.value.length==3) return false" [(ngModel)]='superset.time.minutes' class="form-control" #timeMinutes name='minutes' maxlength="2">
+                            </div>
+                                <div class="form-group form-time">
+                                <span>sec</span>
+                                <input type="number" onKeyPress="if(this.value.length==2) return false" [(ngModel)]='superset.time.seconds'  class="form-control" #timeSeconds name='seconds' maxlength="2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notes">
+                        <a attr.data-target="#addNote-{{superset.id}}" data-toggle="collapse"  href=""><span>add a note</span></a>
+                        <div attr.id="addNote-{{superset.id}}" class="collapse">
+                            <div class="form-group notesForm">
+                                <textarea  [(ngModel)]="noteMessage" #note class="form-control" placeholder="" rows=1 name="note"></textarea>
+                                <button type="button" (click)="addNote(superset,note.value)" class="btn btn-outline-primary">add</button> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notesList">
+                        <div *ngFor="let note of superset.notes;index as n">
+                            <div class="note">
+                                <span>{{note}}</span>
+                                <button type="button" (click)="removeNote(superset,n)" class="btn btn-outline-primary">remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
