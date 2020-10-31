@@ -26,8 +26,6 @@ import { GetCategoriesService } from '../services/get-categories.service';
 })
 export class CreateWorkoutComponent implements OnInit, OnDestroy {
 
- 
-
   unitsArray = ['lbs', 'kg', 'bw','km', 'miles'];
   showExercises = true;
   exerciseList: ExerciseModel[] = [];
@@ -37,7 +35,7 @@ export class CreateWorkoutComponent implements OnInit, OnDestroy {
   getUserWorkouts: any;
   workoutSubscription: Subscription;
   tempSuperSetList = [];
-  categories;
+  categories = []
   categoriesSubscription: Subscription;
   newCategory = false;
 
@@ -55,60 +53,51 @@ export class CreateWorkoutComponent implements OnInit, OnDestroy {
     private removeWorkoutsService: RemoveWorkoutsService,
     private getCategoriesService: GetCategoriesService
     ){ 
+  }
+  
+  ngOnInit() {
     this.categoriesSubscription = this.getCategoriesService.getCategories().subscribe(c => this.categories=c)
     this.currentUser = this.currentUserService.getCurrentUser();
     this.workoutId = this.route.snapshot.paramMap.get('id')
     this.workout = new WorkoutModel(this.exerciseList); 
+    
     this.workoutSubscription = this.getUserWorkoutsService.createUserWorkoutsList(this.currentUser.uid).subscribe(workouts=>{
       let searchedWorkout = workouts.filter(w=>w.id == this.workoutId)[0]
       if (searchedWorkout) this.workout = searchedWorkout
     }) 
   }
-  
-  ngOnInit() {
-
-  }
-
   ngOnDestroy(){
     this.workoutSubscription.unsubscribe();
     this.categoriesSubscription.unsubscribe();
   }
-  onSelectCategory(value){
-    if (value == '') this.newCategory = true;
-    else this.newCategory = false;
-    console.log(value)
-  }
-  setDate(evt){
-    this.workout.timestamp = new Date(evt.year, evt.month-1, evt.day)
-  }
 
-  submitWorkout(f){
-    this.workout.name = f.workoutName;   
-    console.log(f)
-    if (f.customCategory) {
-      this.getCategoriesService.addCategory(f.customCategory);
-      this.workout.category = f.customCategory
+  submitWorkout(){
+    let category = {name: this.workout.category}
+    let foundCategory = this.categories.filter(c=>c.name == category.name)
+    if (foundCategory.length==0) {
+      this.getCategoriesService.addCategory(this.workout.category);
     }
-    else this.workout.category = f.workoutCategory;
-    console.log(this.workout.category)
     if (!this.workoutId) {
       this.workout.id = this.db.createId()
+      this.workout.updateSuperSetOrder()
       let workoutJSON = this.generateWorkoutJSON.generateWorkoutJSON(this.workout)
       console.log(workoutJSON)
       this.createWorkoutService.submitWorkout(workoutJSON)
     }
     else {
-      this.workout.id = this.workoutId
-      let workoutJSON = this.generateWorkoutJSON.generateWorkoutJSON(this.workout)
+      this.workout.id = this.workoutId;
+      this.workout.updateSuperSetOrder();
+      let workoutJSON = this.generateWorkoutJSON.generateWorkoutJSON(this.workout);
       console.log(workoutJSON)
       this.createWorkoutService.updateWorkout(workoutJSON)
     }
       this.router.navigate(['/user-workouts'])
+      return false
   }
-
   deleteWorkout(){
     this.removeWorkoutsService.deleteWorkout(this.workoutId);
     this.removeWorkoutsService.deleteAllWorkout(this.workoutId)
     this.router.navigate(['/user-workouts'])
   }
+
 }

@@ -19,7 +19,7 @@ export class GenerateWorkoutJsonService {
       category: workout.category
     }
 
-    workout.superSetList.forEach(set=>{
+    workout.superSetList.map(set=>{
       let superSetData = {
         name: set.name,
         rounds: set.rounds,
@@ -30,9 +30,10 @@ export class GenerateWorkoutJsonService {
           minutes: set.time.minutes,
           seconds: set.time.seconds
         },
-        notes: set.notes
+        notes: set.notes,
+        orderNumber: set.orderNumber
       }
-      set.exerciseList.forEach(ex=>{
+      set.exerciseList.map(ex=>{
         let exModel = {
           exName: ex.name,
           set: ex.sets || 1,
@@ -41,6 +42,7 @@ export class GenerateWorkoutJsonService {
           id:ex.id,
           distance: ex.distance || null,
           units: ex.units,
+          orderNumber: ex.orderNumber,
           time: ex.time
         }
         superSetData.exercises.push(exModel)

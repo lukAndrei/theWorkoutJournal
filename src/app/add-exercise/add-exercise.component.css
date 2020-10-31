@@ -2,10 +2,19 @@
 input {
     text-align: center;
     font-family: 'Sriracha', cursive;   
+    font-size: 15px;
     border-top: none;
     border-left: none;
-    border-right: none; 
-    border-radius: 0px;
+    border-right: none;
+    border-radius:0px;
+
+}
+select {
+    font-size: 15px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius:0px;
 }
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
@@ -19,28 +28,89 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 form {
-    margin-top:20px;
-    width:350px;
     background-color: white;
-    padding: 10px;
-
 }
 
-.add-exercise{
-    margin: auto;
-    max-width:100%;
-}
+.exercise-button-blue {
+    display:block;
+    width: 160px;
+    font-size:15px;
+    font-weight: 500;
+    border-radius:7px;
+    font-family: 'Roboto', sans-serif;
+    color: #6466ff;
+} 
+.exercise-button-red {
+    display:block;
+    width: 160px;
+    font-size:15px;
+    font-weight: 500;
+    color: #ffffff;
+    border: 2px solid #ff4364 !important;
+    background: #ff4364;
+    border-radius:7px;
+    font-family: 'Roboto', sans-serif;
+} 
 
-.exercise-button{
-    width: 155px;
-    display: block;
-    margin: auto;
+.add-exercise-button {
+    margin: 0 auto;
+    display:block;
+    font-size:15px;
+    font-family: 'Sriracha', cursive;
+    color: #ffffff;
+    background:#ff4364;
+    border: 2px solid #ff4364 !important;
+}
+.dismissModalButton {
+    font-family: 'Sriracha', cursive;
+    font-size:17px;
+    color: #ffffff;
+    background:#6466ff;
+    border: 2px solid #6466ff !important;
+}
+.exercise-button-blue:hover {
+    background: #f2f2f2;
+}
+.exercise-button-blue:active, exercise-button-blue:focus {
+    background:  #d9d9d9;
+}
+.red:active, .red:focus, .red:hover {
+    box-shadow: 0 0 0 2px #ff4364 !important;
+    
+} 
+.card {
+    border-radius:5px;
+    border: none;
+    width:100%;
+}
+.card-body {
+    padding:5px;
+}
+.modal-header {
+    border:none
+}
+.control-buttons button{
+    display: flex;
+    align-items: center;
     border: none;
 }
-
-.btn-outline-primary {
-    font-family: 'Sriracha', cursive;  
-    font-size:17px;
-  
+.modal-content {
+    max-width:420px;
+    margin: auto;
 }
-
+#headerName {
+    font-size:17px;
+    font-family: 'Sriracha', cursive;
+    max-width:80%;
+    word-break: break-all;
+    white-space: normal;
+}
+.modal-footer{
+    border: none;
+}
+.modal-body {
+    padding:10px;
+}
+.modal-footer button {
+    margin:0 auto;
+}

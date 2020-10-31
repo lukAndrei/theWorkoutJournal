@@ -1,70 +1,62 @@
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            <div class="header-title">
-                <h5 class="card-title">workout</h5>
-            </div>
-        </div>
-        <div class="card-body">
-            <form #f="ngForm" (ngSubmit)="submitWorkout(f.value)">
-                <div class="form-group">        
-                    <input style="height:40px;" #workoutName [(ngModel)]="workout.name" class="form-control no-border"  type="text" placeholder="workout name" name="workoutName">  
-                </div>
-                <div class="form-group">
-                    <select (change)="onSelectCategory($event.target.value)"  #workoutCategory [(ngModel)]="workout.category" name="workoutCategory" class="form-control"  id="workoutCategory">
-                        <option></option>
-                        <option *ngFor="let category of categories" >{{ category.name }}</option>
-                        <option value="">Add a new category</option>
-                    </select>                    
-                </div>
-                <div *ngIf="newCategory" class="form-group">        
-                    <input style="height:40px;" #customCategory ngModel class="form-control no-border"  type="text" placeholder="new category" name="customCategory">  
-                </div>                
-                <div  class="form-group">
-                    <div class="input-group">
-                      <input class="form-control" placeholder="select date" name="dp" (dateSelect)="setDate($event)" [(ngModel)]="workout.date" ngbDatepicker #d="ngbDatepicker" required>
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><span style="display:block;" class="material-icons md-18">schedule</span></button>
-                      </div>
-                    </div>
-                  </div>
-                  
-                <div class="d-flex p-2 workout-buttons">
-                    <button [disabled]="!workout.superSetList.length>0 && !workoutId" type="submit" class="btn btn-outline-primary workout-button">Submit</button>
-                    <button *ngIf="workout.superSetList.length>0 && workoutId" type="submit"  class="btn btn-outline-primary workout-button">Update</button>
-                    <button [disabled]="!workoutId" (click)="deleteWorkout()" type="button"  class="btn btn-outline-primary workout-button">remove</button>
-                </div>
-            </form>
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <add-exercise style="margin:auto" [workout]="workout"></add-exercise>
-            </div>
-        </div>
+    <div *ngIf=" !workout.category || !workout.date" style="margin:100px auto;" class="d-flex justify-content-center">
+        <button  type="button" class="btn btn-sm workout-button" data-toggle="modal" data-target="#workoutModal">New workout</button>
     </div>
-    <div class="card">
-        <div class="card-header">
-            <div class="header-title">
-                <h5 class="card-title">workout exercises</h5>
+    <modal-workout-info [workout]="workout"></modal-workout-info>
+    <div class="d-flex mt-5 p-2 justify-content-center">
+        <div *ngIf="workout.date " id="workoutDetails" class="card">
+            <div class="card-header p-2">
+                <div id="workout-buttons" class="d-flex p-1 justify-content-between">
+                    <button *ngIf="workout.superSetList.length>0 && !workoutId" type="submit" form="workoutForm" class="btn btn-sm workout-button">Submit</button>
+                    <!-- Button trigger modal -->
+                    <button *ngIf="workout.name || workout.date || workout.category" type="button" class="btn shadow-none btn-sm workout-info-button" data-toggle="modal" data-target="#workoutModal">Workout info</button>
+                    <button *ngIf="workout.superSetList.length>0 && workoutId" type="submit" form="workoutForm" class="btn btn-sm shadow-none red workout-update-button">Update</button>
+                    <button *ngIf="workoutId" (click)="deleteWorkout()" type="button"  class="btn shadow-none btn-sm workout-info-button">Delete</button>
+                </div>
             </div>
-            <button *ngIf="!showExercises" (click)="showExercises = !showExercises" type="button"  class="btn btn-outline-primary showExercises">Show exercises</button>
-            <button *ngIf="showExercises" (click)="showExercises = !showExercises" type="button"  class="btn btn-outline-primary showExercises">Hide exercises</button>
-        </div>
-        <div class="card-body">
-            <div *ngIf="showExercises" class="row">
-                <edit-exercises style="margin:auto" [workout]="workout"></edit-exercises>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header">
-            <div class="header-title">
-                <h5 class="card-title">design workout</h5>
-            </div>
-        </div>
-        <div class="card-body">
             <div class="card-body">
-                <create-super-set style="margin:auto" [workout]="workout"></create-super-set>
+                <form (keydown.enter)="$event.preventDefault()" id="workoutForm"  class="p-0" #f="ngForm" (ngSubmit)="submitWorkout(f.value)">
+                    <div *ngIf="workout.superSetList.length==0" id="workoutInfo" class="row mt-2 justify-content-between align-items-center">
+                        <div *ngIf="workout.name" class="col-3 p-0 m-0"><span>{{ workout.name }}</span></div>
+                        <div class="col-4 p-0 m-0"><span>{{ workout.timestamp | date:'dd-MM-yyyy' }}</span></div>
+                        <div style="text-align: right;" class="col-5 p-0 m-0 "><span>{{ workout.category }}</span></div>
+                    </div>
+                    <div id="workoutExercises" class="row justify-content-around">
+                        <edit-exercises [workout]="workout"></edit-exercises>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer p-2">
+                <div *ngIf="workout.name || workout.date || workout.category" class="row p-1 justify-content-around">
+                    <add-exercise [workout]="workout"></add-exercise>
+                    <create-super-set *ngIf="workout.exerciseList.length >0" [workout]="workout"></create-super-set>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex mt-4 p-2 justify-content-center">
+        <div id="workoutDesign" *ngIf="workout.superSetList.length>0" class="card">
+            <div class="card-header">
+                <div class="workout-header row no-gutters align-items-center justify-content-center">
+                    <div class="col-4">
+                        <span>{{ workout.name }}</span>
+                    </div>
+                    <div class="col-4">
+                        <span>{{ workout.timestamp | date: 'EE, MMM d' }}</span>   
+                    </div>
+                    <div class="col-4">
+                        <span>{{ workout.category }}</span>      
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <design-workout [workout]="workout"></design-workout>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex flex-row justify-content-around">
+                    <set-rounds-modal [workout]="workout"></set-rounds-modal>
+                    <set-time-modal [workout]="workout"></set-time-modal>
+                </div>
             </div>
         </div>
     </div>

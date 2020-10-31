@@ -29,8 +29,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
+import { NgFlashMessagesModule } from 'ng-flash-messages';
+
 import { EditExercisesComponent } from './edit-exercises/edit-exercises.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { SupersetNotesComponent } from './superset-notes/superset-notes.component';
+import { DesignWorkoutComponent } from './design-workout/design-workout.component';
+import { EditExerciseComponent } from './edit-exercise/edit-exercise.component';
+import { EditSupersetExerciseComponent } from './edit-superset-exercise/edit-superset-exercise.component';
+import { ModalWorkoutInfoComponent } from './modal-workout-info/modal-workout-info.component';
+import { SetTimeModalComponent } from './set-time-modal/set-time-modal.component';
+import { SetRoundsModalComponent } from './set-rounds-modal/set-rounds-modal.component';
+import { SetNotesModalComponent } from './set-notes-modal/set-notes-modal.component';
+import { GetFlaskWorkoutsComponent } from './get-flask-workouts/get-flask-workouts.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 
@@ -48,7 +62,18 @@ import { AuthGuardService } from './services/auth-guard.service';
     CreateSuperSetComponent,
     UserWorkoutsComponent,
     WorkoutComponent,
-    EditExercisesComponent
+    EditExercisesComponent,
+    SupersetNotesComponent,
+    DesignWorkoutComponent,
+    EditExerciseComponent,
+    EditSupersetExerciseComponent,
+    ModalWorkoutInfoComponent,
+    SetTimeModalComponent,
+    SetRoundsModalComponent,
+    SetNotesModalComponent,
+    GetFlaskWorkoutsComponent,
+    ResetPasswordComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -62,6 +87,9 @@ import { AuthGuardService } from './services/auth-guard.service';
     NgbModule,
     DragDropModule,
     MatExpansionModule,
+    MatDialogModule,
+    HttpClientModule,
+    NgFlashMessagesModule.forRoot(),
 
     RouterModule.forRoot([
       {path:'', component: HomeComponent},
@@ -69,15 +97,19 @@ import { AuthGuardService } from './services/auth-guard.service';
       {path:'home', component: HomeComponent},
       
       {path:'login', component: LoginComponent},
+
+      {path:'reset-password', component: ResetPasswordComponent,                                        },
+
       
       {path:'create-account', component: CreateAccountComponent },
 
       {path:'create-workout/:id', component: CreateWorkoutComponent,    canActivate:[AuthGuardService]  },
       {path:'create-workout', component: CreateWorkoutComponent,        canActivate:[AuthGuardService]  },
 
-      {path:'workout/:id', component: WorkoutComponent,    canActivate:[AuthGuardService]  },
+      {path:'workout/:id', component: WorkoutComponent,                  canActivate:[AuthGuardService]  },
 
       {path:'user-workouts', component: UserWorkoutsComponent,          canActivate:[AuthGuardService]  },
+
       
     ])
   ],

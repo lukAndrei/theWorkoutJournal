@@ -1,12 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 @import '~material-design-icons/iconfont/material-icons.css';
+@import "~angular-notifier/styles";
 @import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Noto+Serif&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap');
  body { 
-    background-color:#f8f9fa;
-}
+  /* background:   #F5F5F5; */
+    background: #F8F8FF;
+    padding-top: 60px;
 
+  }
+.ngb-dp-day {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+  
+  .ngb-dp-day > div {
+    width: 2rem !important;
+    height: 2rem !important;
+    line-height: 2rem !important;
+  }
+  
+  .ngb-dp-weekday {
+    width: 2rem !important;
+  }
+  @media (max-width: 979px) {
+    body {
+    }
+  }

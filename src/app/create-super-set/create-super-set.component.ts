@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChildren, QueryList, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ExerciseModel} from '../models/exercise.model';
-import { WorkoutModel } from '../models/workout.model';
 import { SuperSetModel } from '../models/superset.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { CreateWorkoutService } from '../services/create-workout.service';
@@ -8,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { RemoveWorkoutsService } from '../services/remove-workouts.service';
+declare var $: any;
 
 
 @Component({
@@ -41,7 +41,6 @@ export class CreateSuperSetComponent implements OnInit {
   editTime=false;
   isHovered = false;
   addSuperSet=false;
-  exerciseList: ExerciseModel[] = [];
   tempSuperSetList=[];
   emptyList = []
   rounds = 1;
@@ -54,41 +53,37 @@ export class CreateSuperSetComponent implements OnInit {
   id='';
   notes = [];
   noteMessage="";
-  superSet = new SuperSetModel(this.emptyList,this.rounds, this.id, this.name, this.time, this.notes);
+  orderNumber = 0;
+  superSet = new SuperSetModel(this.emptyList,this.rounds, this.id, this.name, this.time, this.notes, this.orderNumber);
 
-  @ViewChildren("superSetCheckBox") superSetCheckBox: QueryList<ElementRef>
   @Input() workout;
 
-  constructor(private db: AngularFirestore, private createWorkoutService: CreateWorkoutService,private route: ActivatedRoute, private removeWorkoutsService: RemoveWorkoutsService) {
-
+  constructor(private db: AngularFirestore, 
+    private createWorkoutService: CreateWorkoutService,
+    private route: ActivatedRoute, 
+    private removeWorkoutsService: RemoveWorkoutsService) {
    }
 
-   ngOnInit() {
-  }
+   ngOnInit() {}
   
-  createSuperSet(f){
-   
+  createSuperSet(){
     this.superSet.exerciseList = this.tempSuperSetList;
     this.superSet.id = this.db.createId()
-    
     this.tempSuperSetList = []
-    
     this.workout.addSuperSet(this.superSet);
-
     this.time = {
       hours: 0,
       minutes: 0,
       seconds: 0
     }
-    this.superSet = new SuperSetModel(this.emptyList, 1,'','',this.time)
-
-    this.clearCheckBox()
+    this.orderNumber = 0
+    this.notes = [];
+    this.superSet = new SuperSetModel(this.emptyList, 1,'','',this.time,this.notes, this.orderNumber)
     this.addSuperSet=false;
+    
   }
   removeSuperSet(setIndex,supersetId){
     this.workout.removeSuperSet(setIndex);
-    let workoutId = this.workout.id;
-    if (this.route.snapshot.paramMap.get('id')) this.removeWorkoutsService.deleteSuperset(workoutId,supersetId);
   }
   addExerciseToSet(index){
     this.workout.addExToSuperSet(index,this.tempSuperSetList[0])
@@ -98,36 +93,9 @@ export class CreateSuperSetComponent implements OnInit {
      superset.deleteExFromSet(ex);
      if (superset.exerciseList.length==0) this.removeSuperSet(index,superset.id)
 }
-  onCheckBoxChange(event){
-    let exercise: ExerciseModel[];
-    if (event.target.checked){
-        exercise = this.workout.exerciseList.filter(e =>e.name==event.target.value);
-        this.tempSuperSetList.push(exercise[0]);
-    } else {
-        this.tempSuperSetList = this.tempSuperSetList.filter(e => e.name!=event.target.value)
-    }
-
-  }
-  clearCheckBox(){
-    this.superSetCheckBox.forEach(element=>{
-      element.nativeElement.checked = false
-    })
-  }
   setRounds(superset, rounds){
     superset.rounds = rounds
   }
-
-  addNote(superset: SuperSetModel,note:string){
-    note.replace('/','')
-    superset.addNote(note);
-    console.log(superset.notes)
-    this.noteMessage = '';
-  }
-
-  removeNote(superset: SuperSetModel,index){
-    superset.removeNote(index)
-  }
-
   drop(event: CdkDragDrop<any[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -149,7 +117,7 @@ export class CreateSuperSetComponent implements OnInit {
   selectExercise(ex){
     this.tempSuperSetList.push(ex)
   }
-  removeExercise(ex,index){
+  removeExercise(index){
     this.tempSuperSetList.splice(index,1)
   }
 }

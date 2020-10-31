@@ -1,0 +1,167 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+    text-align: center;
+}
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(255, 67, 100, 0.2),
+                0 8px 10px 1px rgba(255, 67, 100, 0.14),
+                0 3px 14px 2px rgba(255, 67, 100, 0.12);
+  }
+.cdk-drag-placeholder {
+    opacity: 0;    
+  }
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+.superset-drop.cdk-drop-list-dragging .superset-box:not(.cdk-drag-placeholder) .dropp-box:not(.cdk-drag-placeholder)  {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    position: fixed;
+    z-index: 9999 !important;
+  }
+.superset-ex-list.cdk-drop-list-dragging .superset-exercise-box:not(.cdk-drag-placeholder) .dropp-box:not(.cdk-drag-placeholder)  {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    position: fixed;
+    z-index: 9999 !important;
+  }
+input {
+    text-align: center;
+}
+.card {
+    width:100%;  
+    margin:auto;
+    border: none;
+    border-radius:0px;
+    background: #FFFFFF;
+}
+.card-header {
+    width:80%;
+    margin:auto;
+    border: none;
+    font-family: 'Sriracha', cursive;
+}
+.modal-content {
+    max-width:420px;
+    margin: auto;
+}
+.modal-body {
+    padding:10px;
+}
+.modal-header {
+    border: none;
+}
+#header-name {
+    font-size:18px;
+    font-family: 'Sriracha', cursive;
+    width: 40%;
+    display:block;
+}
+.header span {
+    display:flex;
+    align-items: center;
+}
+.modal-footer {
+    border:none;
+}
+.superset-ex-container{
+    width:  100%;
+    margin: 0 auto;
+}
+.superset-ex-list{
+    width: 60%;
+}
+.superset-data-list {
+    width:40%;
+    height:100%;
+    padding:5px
+}
+.superset-box{
+    display:flex;
+    width:100%;
+    border-bottom: 1px solid #cccccc;
+}
+.superset-box:hover{
+    background-color: rgba(255, 67, 100, 0.12);
+}
+.superset-box:last-child{
+    border: none;
+}
+.superset-ex-box:hover {
+    background-color: rgba(255, 67, 100, 0.2);
+    text-align: center;
+}
+.ex-name {
+    font-size:16px;
+    font-family: 'Sriracha', cursive; 
+}
+.ex-name:hover {
+}
+.ex-name span {
+    display:block;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.remove-ex-button {
+    color:#ff4364;
+    font-family: "Sriracha", cursive;
+    font-size:17px;
+}
+#rounds {
+    font-size:15px;
+    font-family: "Sriracha", cursive;
+}
+#time{
+    font-size:15px;
+    font-family: "Sriracha", cursive;
+}
+.dismissModalButton-red {
+    font-family: 'Sriracha', cursive;
+    font-size:15px;
+    color: #ffffff;
+    background:#ff4364;
+    border: 2px solid #ff4364 !important;
+}
+.dismissModalButton-blue {
+    font-family: 'Sriracha', cursive;
+    font-size:15px;
+    color: #ffffff;
+    background:#6466ff;
+    border: 2px solid #6466ff !important;
+}
+.remove-button {
+    display:block;
+    font-size:15px;
+    font-family: 'Sriracha', cursive;
+    color: #ff4364;
+}
+.blue:active, .blue:focus, .blue:hover {
+    box-shadow: 0 0 0 2px #6466ff !important;
+    
+} 
+.red:active, .red:focus, .red:hover {
+    box-shadow: 0 0 0 2px #ff4364 !important; 
+} 
+.reps {
+    display: flex;
+    max-width:100%;
+    margin: 0 auto;
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
+}
+.reps span {
+    display:block;
+}
+
+.edit-ex-container button {
+    display: block;
+    margin:10px auto;
+}
+
+
+

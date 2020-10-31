@@ -1,103 +1,158 @@
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
-    text-align: center;
-}
 .mat-form-field + .mat-form-field {
     margin-left: 8px;
+}
+.cdk-global-overlay-wrapper {
+    z-index: 1000 !important;
+}
+.cdk-overlay-container {
+    z-index: 9999 !important;
   }
-
 input {
     text-align: center;
 }
-
-.add-superset-button {
-    margin:30px auto;
-    width:100%
+.modal-header {  
+    border: none;
 }
+.dismissModalButton {
+    font-family: 'Sriracha', cursive;
+    font-size:17px;
+    color: #ffffff;
+    background:#6466ff;
+    border: 2px solid #6466ff !important;
+}
+
+.modal-header span{
+    display: flex;
+}
+#header-info {
+    font-family: 'Sriracha', cursive;
+    font-size:17px;  
+    width:35%;
+    
+}
+.modal-footer {
+    border: none;
+}
+.designWorkoutButton {
+    display:block;
+    width: 160px;
+    font-size:15px;
+    font-weight: 500;
+    border-radius:7px;
+    color: #6466ff;
+    font-family: 'Roboto', sans-serif;
+}
+.designWorkoutButton:hover {
+    background: #f2f2f2;
+}
+.designWorkoutButton:active, .designWorkoutButton:focus {
+    background:  #d9d9d9;
+}
+.red:active, .red:focus, .red:hover {
+    box-shadow: 0 0 0 2px  #ff4364 !important;
+}
+.blue:active, .blue:focus, .blue:hover {
+    box-shadow: 0 0 0 2px  #6466ff !important;
+}
+
 .design-container {
     display:flex;
     justify-content: space-between;
 }
 .exercise-container{
-    width: 45%;
-    vertical-align:top;
-
+    width: 35%;
+    margin: auto;
+}
+.workout-container{
+    width: 60%;
+}
+.superset-container{
+    width: 100%;
+    margin: 0 auto;
+    border-bottom:1px solid #cccccc;
+}
+.superset-container:first-child {
 }
 .exercise-list {
-    border: solid 1px #ccc;
-    min-height: 60px;
-    background: white;
-    border-radius: 4px;
-    max-width:100%;
-
-}
-.workout-list {
-    border: solid 1px #ccc;
-    min-height: 120px;
-    background: white;
-    border-radius: 4px;
-    padding:10px;  
     max-width:100%;
 }
 .exercise-box {
-    padding: 20px 10px;
+    padding: 10px 10px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
     font-family: 'Sriracha', cursive; 
-    border-bottom: 2px solid #f2f2f2;
+    font-size:15px;    
+    border-bottom: 1px solid #6466ff;
     text-align: center;
-    border-radius:5px;
+}
+.exercise-box:last-child {
+    border: none;
+  }
+
+.workout-list {
+    min-height: 120px;
+    padding:5px;  
+    width:80%;
+    margin: 0 auto;
+    border-radius: 4px;
 
 }
+.supersets {
+    min-height: 100px;
+    border-radius:7px
 
+}
 .drop-box {
-    padding: 20px 10px;
+    padding: 10px 10px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
     font-family: 'Sriracha', cursive; 
-    border-bottom: 2px solid #f2f2f2;;
-
-
+    text-align:center;
 }
 .exercise-box:hover {
-    color:#ff69b4;
+    color:#ff4364
 }
 .drop-box:hover {
-    color:#ff69b4;
+    color:#ff4364;
+}
+.add-superset-button {
+    display:block;
+    width: 120px;
+    font-size:14px;
+    font-weight: 500;
+    background: #ff4364;
+    border: 2px solid #ff4364 !important;
+    border-radius:7px;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
 }
 
+.drag-text{
+    display:flex;
+    padding:5px;
+    justify-content: center;
+    font-size:15px;
+    font-family: 'Sriracha', cursive; ;
+}
 .cdk-drag-preview {
-    color:#ff69b4;
     box-sizing: border-box;
     border-radius: 4px;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    box-shadow: 0 5px 5px -3px rgba(255, 67, 100, 0.2),
                 0 8px 10px 1px rgba(0, 0, 0, 0.14),
                 0 3px 14px 2px rgba(0, 0, 0, 0.12);
   }
-  .cdk-drag-placeholder {
-    opacity: 0;
-    
+.cdk-drag-placeholder {
+    opacity: 0;    
   }
-  
-  .cdk-drag-animating {
-    color:#ff69b4;
-
+.cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
-  
-  .exercise-box:last-child {
-    border: none;
-  }
-  .drop-box:last-child {
-    border: none;
-  }
 
-  .exercise-list.cdk-drop-list-dragging .exercise-box:not(.cdk-drag-placeholder) .dropp-box:not(.cdk-drag-placeholder)  {
+.exercise-list.cdk-drop-list-dragging .exercise-box:not(.cdk-drag-placeholder) .dropp-box:not(.cdk-drag-placeholder)  {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    position: fixed;
+    z-index: 9999 !important;
+
   }
 .drag-text{
     display:flex;
@@ -111,62 +166,42 @@ input {
 .form-block{
     width:100%;
 }
-.card {
-    width:100%;  
-    margin:auto;
-    border: none;
+.add-exercise-button {
+    display:block;
+    width: 120px;
+    font-size:12px;
+    font-weight: 500;
+    border-radius:7px;
+    color: #6466ff;
+    font-family: 'Roboto', sans-serif;
+    margin:0 auto;
 }
-.card-body{
-    padding:10px;
-}
-.card-header {
-    background-color: white; 
-    width:80%;
-    margin:auto;
-    font-family: 'Sriracha', cursive;
-}
-.superset-box{
-    display:flex;
-    flex-wrap: wrap;
-    max-width:100%;
-    border-bottom:1px solid #cccccc
-}
+
 .remove-exercise {
     margin:auto;
     width: 50%;
 }
 .remove-ex-button {
     display:block;
-    border: none;
     font-size:16px;
-    margin:auto;   
+    font-weight: 500;
+    color: #ff4364;
+    font-family: 'Sriracha', cursive; 
  }
-.superset-ex-container{
-    padding:5px;
-    width:50%;
-
-}
-.superset-data-container {
-    padding:5px;
-    width:50%;   
-}
 
 .superset-ex-list{
-    max-width: 100%;
-    min-height: 60px;
-    background: white;
-    border-radius: 4px;
-    overflow: hidden;
-    text-align: center;
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #ffffff;
 }
 
 .superset-ex-box{
-    padding: 5px 5px;
-    color: rgba(0, 0, 0, 0.87);
-
+    width:100%;
 }
 .ex-name {
-    font-size:20px;
+    font-size:16px;
     font-family: 'Sriracha', cursive; 
 }
 .ex-name span {
@@ -175,208 +210,23 @@ input {
     overflow: hidden;
 }
 .sets {
-    font-size: 16px;
-    font-family: 'Sriracha', cursive; 
-    font-weight: 100;
-
+ width:75%;
 }
-.reps {
-    display: flex;
-    max-width:100%;
-    margin: auto;
-    justify-content: center;
 
-}
 .reps span {
     display:inline-block;
-    padding:2px;
+    font-size: 13px;
+    font-family: 'Sriracha', cursive; 
 }
-
-.edit-ex-container button {
+.remove-exercise {
+    width:25%;
+}
+.remove-ex-button {
     display: block;
-    margin:10px auto;
-}
-
-/* notes */
-
-.notes {
-    width:100%;
-    margin:20px auto;
-    text-align: center;
-
-}
-.notes a {
-    font-family: 'Sriracha', cursive;
-    font-size:18px;
-    color: inherit;
-}
-.notes>a:hover, .workout-title>a:focus, .workout-title>a:active {
-    color: #1E90FF;
-}
-
-.notesForm {
-    margin:10px auto ;
-    font-family: 'Sriracha', cursive;
-}
-
-.notesForm button {
-    display:block;
-    margin: 10px auto;  
-    border:none;
-}
-
-.notesList {
-    margin-top:20px;
-    max-width: 100%;
-}
-
-.note {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding:2px;
-    font-family: 'Sriracha', cursive;
-    font-size:18px;
-    margin-bottom:20px;
-    border:1px solid #ccc;
-    padding:5px;
-}
-.note span {
-    display: block;
-    word-wrap: break-word;
-    overflow: hidden;
-}
-
-.note button {
-    display:block;
-    border:none;
-    font-size: 16px;
-    padding:2px;
-
-}
-/* rounds box */
-.rounds-box {
-    margin-top:20px;
-    margin-bottom:10px;
-    font-family: 'Sriracha', cursive;
-    font-size: 18px;
-    display:flex;
-    justify-content: center;
-}
-.rounds-button a {
-    color:inherit;
-}
-.rounds-button>a:hover, .workout-title>a:focus, .workout-title>a:active {
-    color: #1E90FF;
-}
-.rounds-text  {
-    max-width:100%;
-    font-size:18px;
-}
-.rounds-text span{
-    display:block;
-    height:100%;
-    width:100%;
-    justify-content: left;
-}
-.editRounds input{
-    margin:auto;
-    width:60px;
-    font-size:18px;
+    font-size: 13px;
+    font-family: 'Sriracha', cursive; 
 }
 
 
-/* time box */
-
-.time-box{
-    margin:20px auto 15px;
-    font-size:18px;
-    font-family: 'Sriracha', cursive;
-}
-.time-box a {
-    width:100%;
-    margin:auto;
-    text-align: center;
-    color: inherit;
-
-}
-.time-box>a:hover, .workout-title>a:focus, .workout-title>a:active {
-    color: #1E90FF;
-}
-
-.show-time  {
-    display:flex;
-    justify-content:    center;
-}
-
-.time-text {
-    margin-right:5px;
-    font-size:18px;
-}
-
-.time-text span{
-    justify-content: left;
-    margin-right:5px;
-}
-
-.set-time {
-    display:flex;
-    max-width:100%;
-    justify-content: center;
-}
-
-.form-time{
-    font-family: 'Sriracha', cursive;
-    font-size:18px;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right:10px;
-}
-.form-time span {
-   display:block;
-   margin-right:5px;
-}
-.form-time input {
-    width:60px;
-    padding:0px;
-}
-.header-box {
-    display:flex;
-    width:100%;
-    padding:5px;
-    font-size:16px;
-    font-family: 'Sriracha', cursive;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.header-box span {
-    display:block;
-}
-
-.remove-set-box{
-    width:100%;
-    padding:5px;
-    font-size:16px;
-    font-family: 'Sriracha', cursive;
-}
-.remove-set-box button {
-    display:block;
-    margin:auto;
-    border: none;
-}
-
-.btn-outline-primary {
-    font-family: 'Sriracha', cursive;
-}
-
-
-@media (max-width: 767.98px) { 
-    .card {
-        max-width: 100%;
-    }
-}
 
 

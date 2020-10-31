@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <div data-keyboard="false" class="modal fade" id="workoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0 p-2">
+                    <div id="header-info" class="row justify-content-center">
+                        <span>Share some details about your workout</span>
+                    </div>
+                </div>
+                    <div class="modal-body">
+                        <form (keydown.enter)="$event.preventDefault()" id="workoutInfoForm"  class="" #f="ngForm" (ngSubmit)="setWorkoutInfo(f.value)">
+                            <div class="form-group">
+                                <label for="workoutName" class="form-label">Name</label>
+                                <input id="workoutNameInput" #workoutName [(ngModel)]="workout.name" class="form-control no-border" id="workoutName" type="text" placeholder="" name="workoutName">
+                            </div>
+                            <div class="form-group ">
+                                <label for="workoutCategory" class="form-label">Category</label>
+                                <div class="form-group mb-0 d-flex justify-content-center">
+                                    <select id="workoutCategoryInput" (change)="onSelectCategory($event.target.value)"  #workoutCategory [(ngModel)]="workout.category" name="workoutCategory" class="form-control"  id="workoutCategory">
+                                        <option></option>
+                                        <option *ngFor="let category of categories" >{{ category.name }}</option>
+                                        <option value="addCategory">Add a new category</option>
+                                    </select>                    
+                                </div>
+                            </div>
+                            <div *ngIf="newCategory" class="form-group">        
+                                <input (change)="addCategory(customCategory.value)" #customCategory ngModel class="form-control no-border"  type="text" placeholder="new category" name="customCategory">  
+                            </div> 
+                            <div class="form-group">
+                                <label for="workoutDateInput" class="form-label">Date</label>
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><span style="display:block;" class="material-icons md-18">schedule</span></button>
+                                        </div>
+                                    <input id="workoutDate" class="form-control datepicker" placeholder="select date" name="dp" (dateSelect)="setDate($event)" [(ngModel)]="workout.date" ngbDatepicker #d="ngbDatepicker" required>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center border-0 p-2">
+                        <button  type="submit" form="workoutInfoForm"  class="btn btn-sm">Done</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -5,16 +5,15 @@ nav{
     box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1)
 }
 .navbar-brand {
-    font-size:24px;
+    font-size:28px;
     font-family: 'Sriracha', cursive;
-
+    font-weight: 600;
 }
 .navbar-brand span {
     display: block;
-    background-color: #ff80bf;
     padding-left:10px;
     padding-right:10px;
-    color: white;
+    color: #ff4364;
     border-radius: 20px;
     text-decoration-color: white;
 }
@@ -23,13 +22,61 @@ nav{
     color: white;
 }
 
-.navbar-collapse > ul.navbar-nav > li.nav-item > a  {
-    font-size:17px; 
-    font-family: 'Roboto', sans-serif;}
+.dropdown-item {
+    font-size:15px; 
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
 
-
-.navbar-collapse > ul.navbar-nav > li.nav-item > .dropdown-menu > a {
-    font-size:17px;
-    text-decoration: none;
+.create-workout-button {
+    width:140px;
+    display: block;
+    border: 2px solid #ff4364 !important;
+    font-weight: 400;
+    color: #000000;
+    font-size:13px;
+    align-items: center;
+    border-radius:7px;
     font-family: 'Roboto', sans-serif;
 }
+.saved-workout-button {
+    width:140px;
+    display: block;
+    font-weight: 400;
+    color: #000000;
+    font-size:13px;
+    align-items: center;
+    border-radius:7px;
+    font-family: 'Roboto', sans-serif;
+}
+.favourite-workout-button {
+    width:140px;
+    display: block;
+    font-weight: 400;
+    color: #000000;
+    font-size:13px;
+    align-items: center;
+    border-radius:7px;
+    font-family: 'Roboto', sans-serif;
+}
+ .btn:active, .btn-focus, .btn:hover {
+    box-shadow: 0 0 0 2px  #ff4364 !important
+}
+.material-icons {
+}
+@media (min-width: 992px) { 
+    .workout-button-li{
+        margin-left:30px;
+    }
+    .small-screen {
+        display: none;
+    }
+}
+@media (max-width: 992px) { 
+    .large-screen {
+        display: none;
+    }
+    .shortcuts {
+        display: none;
+    }
+ }

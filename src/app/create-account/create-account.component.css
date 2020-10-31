@@ -1,16 +1,41 @@
-.container {
-    max-width:350px;
-    margin-top:100px;
+
+.form-div{   
+    background: #ffffff; 
+    border-radius:7px;
+    margin-top:20px;
+}
+.register-title {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+.register-title h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color:#737373;
 }
 form button {
     display: block;
     margin:auto;
+    background:#ff4364 !important;
+    border: 1px solid #ff4364 !important;
+    font-weight: 600 !important;
+    outline: none !important;
+    color: #fff;
+}
+form {
+    margin:auto;
+}
+label {
+    font-size:15px;
 }
 .google-login{
     display:flex;
     justify-content: center;
+    flex-direction: row;
     max-width:100%;
     margin: 30px auto;
+    align-items: center;
 }
 .google-login button {
     display:block;
@@ -18,17 +43,10 @@ form button {
     margin-left:5px;
 }
 .google-login span {
-    display:block;
-}
-.text {
-    max-width:350px;
-    margin-top:30px;
-    margin-bottom:10px;
-    display:flex;
-    justify-content: center;
-}
-.text span {
     display: block;
     font-family: 'Sriracha', cursive;
     font-size: 18px;
 }
+
+@media (max-width: 768px) { 
+ }

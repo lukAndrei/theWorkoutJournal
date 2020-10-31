@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { CurrentUserService } from './current-user.service';
 import { AppUser } from '../models/appUser.model';
+import { SuperSetModel } from '../models/superset.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +11,23 @@ export class RemoveWorkoutsService {
   currentUser: AppUser;
   workoutRef;
   allWorkoutsRef;
+  deleteSupersetList = [];
 
   constructor(private db: AngularFirestore, private currentUserService: CurrentUserService) {
     this.currentUser = this.currentUserService.getCurrentUser()
     this.workoutRef = this.db.collection('/users').doc(this.currentUser.uid).collection('/workout')
     this.allWorkoutsRef = this.db.collection('/workouts')
-
    }
 
-   deleteSuperset(workoutId,supersetId){
-    let userWorkoutRef = this.db.collection('/users').doc(this.currentUser.uid).collection('/workout').doc(workoutId);
-    let workoutRef = this.db.collection('/workouts').doc(workoutId);
+   getDeleteSupersetList() {
+     return this.deleteSupersetList;
+   }
+   addSupersetToDelete(supersetId){
+     this.deleteSupersetList.push(supersetId);
+  }
 
-    userWorkoutRef.collection('/superSets').doc(supersetId).delete()
-    workoutRef.collection('/superSets').doc(supersetId).delete()
+  clearDeleteSupersetList() {
+    this.deleteSupersetList = [];
   }
 
   deleteWorkout(workoutId){
@@ -45,7 +49,6 @@ export class RemoveWorkoutsService {
    }
 
    deleteAllWorkout(workoutId){
-     console.log(workoutId)
     let excerciseRef = this.db.collection('/workouts').doc(workoutId).collection('/exercises')
     excerciseRef.valueChanges().subscribe(exList=>{
       exList.forEach(ex=>{

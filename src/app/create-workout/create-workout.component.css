@@ -6,77 +6,126 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0; 
 }
 input {
+    font-size: 15px;
+}
+#workoutNameInput{
+    font-size:10px;
     font-family: 'Sriracha', cursive;   
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-radius: 0px;
-
 }
-
-.container {
-  margin-top:20px;
+#workoutCategoryInput {
+    font-size:15px;
+    font-family: 'Sriracha', cursive;   
 }
-
 form {
-    max-width:400px;
+    width: 100%;
     margin: auto;
-    background-color: white;
     border-radius:5px;
     padding:10px;
 }
 
-.workout-buttons {
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width:100%;
-    background-color: white;
-}
-
-.workout-button {
-    display:block;
-    font-family: 'Sriracha', cursive;
-    border: none;
-    font-size:17px;
-}
-.card {
-    max-width:600px;
-    margin: 0 auto 30px;;
-    border-radius: 10px;
+#workoutInfo {
+    font-family: 'Sriracha', cursive; 
+    width:90%;
+    margin: 0 auto; 
     
 }
-.card-header {
-    background-color: white;
-    width: 80%;
-    margin:0 auto 20px;
-    font-family: 'Sriracha', cursive;
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
+#workoutDetails {
+    width:500px;
+    margin:0 auto;
+    background: #FFFFFF;
+    border-radius:15px;
+
 }
-.card-footer {
-    background-color: white;
-    width: 80%;
-    margin:auto;
+#workoutDetails .card-body {
+    background: #FFFFFF;
+    padding:10px;  
+    border-radius: 4px;
 }
-.header-title {
-    max-width:100%;
+#workoutDesign {
+    width:400px;
+    margin:0 auto;
+    background:   #FFFFFF;
+    border-radius:15px;
+}
+#workoutExercises {
+    width:90%;
+    margin:0  auto;
+}
+.workout-header {
+    font-size:15px;
+    font-family: 'Sriracha', cursive; 
     text-align: center;
 }
-.header-title h5 {
+.workout-button {
     display:block;
-    max-width:100%;
-    margin:auto;
+    width:140px;
+    background:#ff4364;
+    border: 1px solid #ff4364 !important;
+    color: #ffffff;
+    border-radius:7px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+} 
+.workout-info-button {
+    display:block;
+    width:140px;
+    color: #666666;
+    font-size: 14px;
+    font-weight:500;
+    border-radius:7px;
+    font-family: 'Roboto', sans-serif;
+}
+.workout-update-button {
+    display:block;
+    width:100px;
+    color: #666666;
+    font-size: 14px;
+    font-weight:500;
+    border-radius:7px;
+    font-family: 'Roboto', sans-serif;
+    border: 2px solid #ff4364 !important;
+    
+}
+.workout-info-button:hover {
+    background: #f2f2f2;
+}
+.workout-info-button:active, .workout-info-button:focus {
+    background:  #d9d9d9;
+}
+.red:active, .red:focus, .red:hover {
+    box-shadow: 0 0 0 2px  #ff4364 !important
+} 
+
+#workoutDesign .card-header {
+    width: 90%;
+    margin: 0 auto;    
+    background: #FFFFFF;
+    border-bottom:2px solid #cccccc;
+    padding:5px
+
+}
+#workoutDesign .card-footer {
+    width: 90%;
+    margin:0 auto;
+    background:  #FFFFFF;
+    border: none;
+    padding:5px;
+}
+#workoutDesign .card-body {
+    padding:0px; 
+}
+#workoutDetails .card-header {
+    width: 90%;
+    margin:0 auto;
+    background: #FFFFFF;
+    
 }
 
-.card-body {
-    background-color: white;
-    border-radius: 10px;
-    padding:10px;
-}
+#workoutDetails .card-footer {
+    width: 90%;
+    margin:0 auto;
+    background: #FFFFFF;
 
-.showExercises{
-    display: inline-block;
 }
 

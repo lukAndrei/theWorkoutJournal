@@ -1,14 +1,17 @@
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light">
     <div class="container">
       <div class="navbar-brand">
-        <a  routerLink="/home">
+        <a routerLink="/home">
           <span>TWj</span></a>
       </div>
+      <a class="btn btn-sm history-workout-button small-screen" href="#" routerLink="/create-workout">Saved workouts</a>
+      <a class="btn btn-sm history-workout-button small-screen" href="#" routerLink="/create-workout">Favourites</a>
+      <a class="btn btn-sm create-workout-button small-screen" href="#" routerLink="/create-workout">Create workout</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul id="navigation-list" class="navbar-nav mr-auto">
           <ng-template #anonymousUser>
            <li class="nav-item active">
              <a class="nav-link" routerLink="/login">Login</a>
@@ -18,17 +21,30 @@
             </li>
           </ng-template>
           <li *ngIf="user; else anonymousUser" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ user.firstName }}
-            </a>
+                <a class="nav-link" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="d-flex align-items-center">
+                    <span>{{ user.firstName }}</span>
+                    <span class="material-icons p-1">arrow_drop_down_circle</span>
+                  </div>
+                </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" routerLink="/create-workout">Create workout</a>
+              <a class="btn btn-md dropdown-item" routerLink="/create-workout">Create workout</a>
               <a class="dropdown-item" routerLink="/user-workouts">My workouts</a>
               <a class="dropdown-item" style="margin-top:20px;" (click)="logout()" routerLink="/">Logout</a>
             </div>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link " href="#" routerLink="/create-workout">
+          <li class="d-flex align-items-center nav-item dropdown workout-button-li">
+            <a class="btn btn-sm saved-workouts-button large-screen" href="#" routerLink="/create-workout">
+              Saved workout
+            </a>
+          </li>
+          <li class="d-flex align-items-center nav-item dropdown workout-button-li">
+            <a class="btn btn-sm favourites-workout-button large-screen" href="#" routerLink="/create-workout">
+              Favourites
+            </a>
+          </li>
+          <li class="d-flex align-items-center nav-item dropdown workout-button-li">
+            <a class="btn btn-sm create-workout-button large-screen" href="#" routerLink="/create-workout">
               Create workout
             </a>
           </li>

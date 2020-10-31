@@ -4,9 +4,8 @@ import { WorkoutModel } from '../models/workout.model';
 import { CurrentUserService } from './current-user.service';
 import { AppUser } from '../models/appUser.model';
 import { map, switchMap,  flatMap } from 'rxjs/operators';
-import { ExerciseModel } from '../models/exercise.model';
 import { SuperSetModel } from '../models/superset.model';
-import { from, of, Subscription } from 'rxjs';
+import { from } from 'rxjs';
 import { AuthServiceService } from './auth-service.service';
 
 
@@ -47,7 +46,6 @@ export class GetUserWorkoutsService {
     )
   }
   createAllWorkoutsList(){
-
     return this.getAllWorkouts()
     .pipe(
       switchMap(wList=>{
@@ -80,11 +78,11 @@ export class GetUserWorkoutsService {
   }
 
   getWorkoutSuperSets(workoutId,userId){
-    return this.db.collection('/users').doc(userId).collection('/workout').doc(workoutId).collection('/superSets').valueChanges()
+    return this.db.collection('/users').doc(userId).collection('/workout').doc(workoutId).collection('/superSets',query=>query.orderBy('orderNumber')).valueChanges()
     .pipe(map(SuperSetModel.fromJSONlist))
  }
   getAllWorkoutSuperSets(workoutId){
-  return this.db.collection('/workouts').doc(workoutId).collection('/superSets').valueChanges()
+  return this.db.collection('/workouts').doc(workoutId).collection('/superSets',query=>query.orderBy('orderNumber')).valueChanges()
   .pipe(map(SuperSetModel.fromJSONlist))
 }
 

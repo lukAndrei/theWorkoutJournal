@@ -2,8 +2,7 @@
 import { ExerciseModel } from '../models/exercise.model'
 import { SuperSetModel } from './superset.model';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { AppUser } from './appUser.model';
-import { WorkoutComment } from './comment.model';
+
 
 export class WorkoutModel {
     public name: string;
@@ -41,31 +40,43 @@ export class WorkoutModel {
         this.exerciseList.push(exercise)
     }
     addSuperSet(superSet:SuperSetModel){
-        this.superSetList.push(superSet)  
+        superSet.updateExerciseOrder();
+        this.superSetList.push(superSet);
+        this.updateSuperSetOrder();
     }
     addExToSuperSet(index,ex){
         this.superSetList[index].exerciseList.push(ex)
+        this.superSetList[index].updateExerciseOrder();
     }
     removeExFromSuperSet(index,name){
         this.superSetList[index].deleteExFromSet(name);
-        this.updateSuperSetList();
-      
+        this.superSetList[index].updateExerciseOrder();
     }
     removeEx(index){
         this.exerciseList.splice(index,1)
+        this.superSetList[index].updateExerciseOrder();
+    }
+    removeExById(exId){
+        this.exerciseList = this.exerciseList.filter(ex => exId !== ex.id)
     }
     removeSuperSet(index){
         this.superSetList.splice(index,1)
+        this.updateSuperSetOrder();
     }
-
     removeExFromAll(exercise){
-          this.superSetList.map((superSet, index)=>{
+          this.superSetList.map((superSet)=>{
              superSet.deleteExFromSet(exercise)
          })
          this.updateSuperSetList()
     }
     updateSuperSetList(){
         this.superSetList = this.superSetList.filter(superSet=>superSet.exerciseList.length>0)
+    }
+    updateSuperSetOrder(){
+        this.superSetList.map(superset => {
+            let supersetIndex = this.superSetList.indexOf(superset);
+            superset.orderNumber = supersetIndex;
+        })
     }
 
 }

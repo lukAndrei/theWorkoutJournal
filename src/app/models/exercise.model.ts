@@ -13,24 +13,26 @@ export class ExerciseModel {
     public totalReps: number ;
     public totalSets: number ;
     public id;
+    public orderNumber: number;
     public time: {
         hours: number,
         minutes: number,
         seconds: number
     }
 
-    constructor(sets?, name?, units?, id?, distance?, time?){
+    constructor(sets?, name?, units?, id?, distance?, orderNumber?, time?){
 
         this.sets = sets;
         this.name = name;
         this.exId = ExerciseModel.idCounter.toString();
-
         this.totalSets = this.sets.length;
         this.totalReps = this.getAllReps();
         this.distance = distance;
         this.id = id;
         this.units = units;
+        this.orderNumber = orderNumber
         this.time = time;
+        
     }
 
     static fromJSONlist(a:[]){
@@ -41,21 +43,25 @@ export class ExerciseModel {
         let setList = [];
         let exUnits = exData.units
         let distance = exData.distance;
-        let time = exData.time
+        let orderNumber = exData.orderNumber;
+        let time = {hours: exData.time.hours, minutes:exData.time.minutes, seconds:exData.time.seconds};
         exData.set.forEach(set =>{
             setList.push({
                 reps: set.reps,
                 weight: set.weight,
             })
         })
-        return new ExerciseModel(setList, exData.exName, exUnits, exData.id, distance, time)
+        return new ExerciseModel(setList, exData.exName, exUnits, exData.id, distance, orderNumber, time)
     }
 
     setName(name){
         this.name = name
     }
     addSet(){
-        this.sets.push({reps:1, weight:0})  
+        let lastSet = this.sets.length -1
+        let reps = this.sets[lastSet].reps;
+        let weight = this.sets[lastSet].weight;
+        this.sets.push({reps:reps, weight:weight})  
         this.getAllReps()
         this.updateSets()
     }
@@ -79,14 +85,15 @@ export class ExerciseModel {
     setUnits(units:string){
         this.units = units
     }
-    setTime(time:{
-        hours: number,
-        minutes: number,
-        seconds: number
-    }){
-        this.time = time
+    setHours(hours){
+        this.time.hours = hours
     }
-
+    setMinutes(minutes){
+        this.time.minutes = minutes
+    }
+    setSeconds(seconds){
+        this.time.seconds = seconds
+    }
     getName(){
         return this.name
     }

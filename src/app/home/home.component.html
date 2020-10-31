@@ -1,88 +1,88 @@
 <div class="container">
-  <div class="container-workouts">
-    <div class="workout-box" *ngFor="let workout of workouts;index as k">
-        <div class="card">
-          <a class="header-link" [routerLink]="['/workout/', workout.id]">
-            <div class="card-header">
-              <span>{{ workout.timestamp | date : 'MM.dd.yyyy'}}</span>
-              <span>{{ currentUser.firstName}}</span>
-            </div>
-          </a>
-            <div class="card-body">
-              <div class="workout-title">
-                <a [routerLink]="['/workout/', workout.id]" href="" class=""> <span>{{workout.name}}</span></a>
-              </div>
-              <div *ngFor="let superset of workout.superSetList; index as s" class="superset-box">
-                  <div  class="superset-ex-list">
-                    <div *ngFor="let ex of superset.exerciseList" class="superset-ex-box">
-                      <div class="ex-name">
-                        <div *ngIf="ex.sets.length==1" class="reps-1">
-                          <div *ngFor="let set of ex.sets">
-                            <span>{{set.reps}} {{ ex.name }}</span>
-                          </div>
-                        </div>
-                        <div *ngIf="ex.sets.length>1" class="reps-2">
-                          <a attr.data-target="#ex-{{ex.id}}" data-toggle="collapse"><span>{{ex.name}}</span></a>
-                        </div>
-                      </div>
-                      <div attr.id="ex-{{ex.id}}" class="ex-collapse collapse">
-                        <div class="sets-box">
-                          <div *ngIf="ex.units !='bw' && ex.units !='miles' && ex.units !='km'" class="sets">
-                            <div class="reps" *ngFor="let set of ex.sets">
-                                <span>{{set.reps}} reps</span>
-                                <span>@ {{ set.weight }}</span>
-                                <span>{{ ex.units }}</span>
-                            </div>
-                        </div>
-                        <div *ngIf="ex.units=='bw'" class="sets">
-                            <div class="reps" *ngFor="let set of ex.sets">
-                                <span>reps</span>
-                                <span>{{set.reps}}</span>
-                            </div>
-                        </div>
-                        <div class="sets" *ngIf="ex.units =='miles' || ex.units =='km' ">
-                            <div class="reps" *ngFor="let set of ex.sets">
-                                <span>{{ set.weight }}</span>
-                                <span>{{ ex.units }}</span>                                            
-                            </div>
-                        </div>
-                        </div>
-                      </div>
+  <div class="d-flex flex-column container-workouts">
+      <div class="mb-4 workout-box" *ngFor="let workout of workouts;index as k">
+          <div *ngIf="workout.superSetList.length>0" class="card workout-card p-0">
+              <div class="card-header p-2">
+                <div class="workout-header row no-gutters align-items-center justify-content-center">
+                    <div class="col-3">
+                        <span>{{ workout.name }}</span>
                     </div>
-                  </div>
-                  <div class="superset-data">
-                    <div *ngIf="superset.rounds>1" class="rounds-box">
-                          <span>X {{superset.rounds}} rounds</span>
-                  </div>
-                  <div class="time-box">
-                        <div *ngIf="superset.time.hours>0" class="time-text">
-                            <span> {{superset.time.hours}} h</span>
-                        </div>
-                        <div *ngIf="superset.time.minutes>0" class="time-text">
-                            <span> {{superset.time.minutes}} min </span>
-                        </div>
-                        <div *ngIf="superset.time.seconds>0" class="time-text">
-                            <span> {{superset.time.seconds}} sec</span>
-                        </div>
-                  </div>
-                  <div class="notesList">
-                    <div *ngFor="let note of superset.notes;index as n">
-                        <div class="note">
-                            <span>{{note}}</span>
-                        </div>
+                    <div class="col-5">
+                        <span>{{ workout.timestamp | date: 'EE, MMM d' }}</span>   
+                    </div>
+                    <div class="col-4">
+                        <span>{{ workout.category }}</span>      
                     </div>
                 </div>
+              </div>
+              <div class="card-body p-2">
+                  <div *ngFor="let superset of workout.superSetList; index as s" class="superset-box mb-1">
+                      <div class="superset-ex-container d-flex">
+                          <div class=" superset-ex-list p-0">
+                              <div *ngFor="let ex of superset.exerciseList" class=" superset-ex-box p-0">
+                                  <div class="row  no-gutters p-0">
+                                      <div class="col flex-column">
+                                          <div class="row no-gutters">
+                                              <div class="col align-self-center">
+                                                  <div class="ex-name " type="button" (click)="selectExercise(ex)" data-toggle="modal" data-target="#editSuperSetExerciseModal">
+                                                      <span>{{ex.name}}</span>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div *ngIf="ex.units !='bw' && ex.units !='miles' && ex.units !='km'" class="sets mb-2">
+                                              <div class="reps" *ngFor="let set of ex.sets">
+                                                  <span>{{set.reps}} reps</span>
+                                                  <span>@ {{ set.weight }}</span>
+                                                  <span>{{ ex.units }}</span>
+                                              </div>
+                                          </div>
+                                          <div *ngIf="ex.units=='bw'" class="sets mb-2">
+                                              <div class="reps" *ngFor="let set of ex.sets">
+                                                <span>{{set.reps}}</span>
+                                                <span class="ml-1">reps</span>
+                                              </div>
+                                          </div>
+                                          <div class="sets mb-2" *ngIf="ex.units =='miles' || ex.units =='km' ">
+                                              <div class="reps" *ngFor="let set of ex.sets;index as i">
+                                                  <span>round {{i+1}} -</span>
+                                                  <span class="ml-1">{{set.reps}} </span>
+                                                  <span class="ml-1">{{ ex.units }}</span>                                            
+                                              </div>
+                                          </div>
+                                          <div class="reps mb-2">
+                                              <span *ngIf="ex.time.hours>0" class="mr-1">{{ex.time.hours}}h</span>
+                                              <span *ngIf="ex.time.minutes>0" class="mr-1">{{ex.time.minutes}}min</span>
+                                              <span *ngIf="ex.time.seconds>0" class="mr-1">{{ex.time.seconds}}sec </span>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="d-flex flex-column superset-data-list align-items-center justify-content-center">
+                              <div id="rounds" class="d-flex">
+                                  <span>rounds {{superset.rounds}}</span>
+                              </div>
+                              <div id="time" class="d-flex">
+                                  <div class="d-flex justify-content-center">
+                                      <div *ngIf="superset.time.hours>0" class="d-flex">
+                                          <span> {{superset.time.hours}}</span>
+                                          <span>h</span>
+                                      </div>
+                                      <div *ngIf="superset.time.minutes>0" class="time-text ml-1">
+                                          <span> {{superset.time.minutes}}</span>
+                                          <span>min</span>
+                                      </div>
+                                      <div *ngIf="superset.time.seconds>0" class="d-flex ml-1">
+                                          <span> {{superset.time.seconds}}</span>
+                                          <span>sec</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                   </div>
               </div>
-            </div>
-            <div class="card-footer">
-              <div class="card-details">
-                <a [routerLink]="['/workout/', workout.id]" href="#">See more</a>
-              </div>
-            </div>
           </div>
-    </div>
+      </div>
+  </div>
 </div>
-</div>
-
-

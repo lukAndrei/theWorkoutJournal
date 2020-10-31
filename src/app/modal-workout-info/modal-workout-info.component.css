@@ -1,0 +1,39 @@
+#header-info{
+    width:100%;
+    margin: 0 auto;
+    font-family: 'Sriracha', cursive; 
+    font-size:15px;
+}
+.modal-footer button {
+    display:block;
+    width:140px;
+    border: none;
+    font-size:15px;
+    background:#ff4364;
+    border: 1px solid #ff4364 !important;
+    font-weight: 600;
+    color: #ffffff;
+    border-radius:7px;
+}
+.btn:active, .btn:focus, .btn:hover {
+    box-shadow: 0 0 0 2px #ff4364 !important;
+} 
+.modal-header span {
+    display: flex;
+}
+.modal-header button {
+    display:block;
+}
+.modal-content {
+    background-color: #ffffff;
+ }
+form {
+    width:60%;
+    margin: 0 auto;
+}
+.form-label {
+    font-size:14px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+
+}

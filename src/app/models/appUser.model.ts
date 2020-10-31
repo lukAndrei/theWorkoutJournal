@@ -3,5 +3,5 @@ export interface AppUser {
     lastName: string;
     uid: string;
     email: string;
-    nickname?: string;
+    username?: string;
 }

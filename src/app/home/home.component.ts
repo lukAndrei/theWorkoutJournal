@@ -13,24 +13,20 @@ import { WorkoutSubscriptionServiceService } from '../services/workout-subscript
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  showWorkout = false;
   workouts: WorkoutModel[] = [];
   workoutsSubsbscription: Subscription;
   currentUser: AppUser;
   constructor(private getUserWorkouts: GetUserWorkoutsService, private commentsService: CommentsServiceService, 
     private getCurrentUserService: CurrentUserService,
     private workoutSubscriptionService: WorkoutSubscriptionServiceService
-    ) {
-      
-    this.currentUser = this.getCurrentUserService.getCurrentUser()
-    
+    ) {}
+
+  ngOnInit() {
     this.workoutsSubsbscription = this.getUserWorkouts.createAllWorkoutsList()
       .subscribe(workouts=>{
         this.workouts=workouts
-        console.log(this.workouts)
       })
-   }
-
-  ngOnInit() {
   }
   ngOnDestroy(){
     this.workoutsSubsbscription.unsubscribe()

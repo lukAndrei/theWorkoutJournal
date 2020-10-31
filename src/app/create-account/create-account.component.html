@@ -1,33 +1,57 @@
 <div class="container">
-    <form #f="ngForm" (ngSubmit)="registerUserWithEmailPassword(f.value)">
-        <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input #firstName="ngModel" ngModel name="firstName" type="text" class="form-control" id="firstName" aria-describedby="firstNameInput" required>
-            <div class="alert alert-danger" *ngIf="firstName.touched && firstName.invalid">first name</div>
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-6">
+            <div class="form-div">
+                <div class=" register-title">
+                    <h1>Sign In and get Creative with your Workouts</h1>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <!-- <div class="alert alert-danger">first name</div> -->
+                        <form class="" #f="ngForm" (ngSubmit)="registerUserWithEmailPassword(f)">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input #firstName="ngModel" ngModel name="firstName" type="text" class="form-control" id="firstName" aria-describedby="firstNameInput" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input #lastName="ngModel" ngModel name="lastName" type="text" class="form-control" id="lastName" aria-describedby="lastNameInput" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Username</label>
+                                <input #username="ngModel" ngModel name="username" type="text" class="form-control" id="username" aria-describedby="lastNameInput" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email-account">Email Address</label>
+                                <input #email="ngModel" ngModel name="email" type="email" class="form-control" id="email-account" aria-describedby="emailInput" required>
+                                <small id="emailInput" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="password-account">Password</label>
+                                        <input #password="ngModel" ngModel name="password" type="password" class="form-control" id="password-account" aria-describedby="passwordInput" required minlength="6">
+                                        <div class="alert alert-danger" *ngIf="password.touched && password.invalid">Please provide a password</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="confirm-password">Password</label>
+                                        <input #confirmPassword="ngModel" ngModel name="confirmPassword" type="password" class="form-control" id="confirm-password" aria-describedby="confirm-password" required minlength="6">
+                                        <div class="alert alert-danger" *ngIf="confirmPassword.touched && confirmPassword.invalid">Please provide a password</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button [disabled]="!f.valid" type="submit" class="btn btn-md btn-outline-info">Create account</button>
+                        </form>
+                        <div class="google-login">
+                            <span><img class="img-responsive" src="assets/images/google-icon.png"></span>
+                            <button type="button" (click)="googleLogin()" class="btn btn-outline-info">Google login</button>
+                        </div>
+                    </div>
+                </div> 
+            </div>
         </div>
-        <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input #lastName="ngModel" ngModel name="lastName" type="text" class="form-control" id="lastName" aria-describedby="lastNameInput" required>
-            <div class="alert alert-danger" *ngIf="lastName.touched && lastName.invalid">last name</div>
-        </div>
-        <div class="form-group">
-            <label for="email-account">Email Address</label>
-            <input #email="ngModel" ngModel name="email" type="email" class="form-control" id="email-account" aria-describedby="emailInput" required>
-            <small id="emailInput" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            <div class="alert alert-danger" *ngIf="email.touched && email.invalid">Please provide email adress</div>
-        </div>
-        <div class="form-group">
-            <label for="password-account">Password</label>
-            <input #password="ngModel" ngModel name="password" type="password" class="form-control" id="password-account" aria-describedby="passwordInput" required minlength="6">
-            <div class="alert alert-danger" *ngIf="password.touched && password.invalid">Please provide a password</div>
-        </div>
-        <button [disabled]="!f.valid" type="submit" class="btn btn-outline-info">Create account</button>
-    </form>
-    <div class="text">
-        <span>Or</span>
-    </div>
-    <div class="google-login">
-        <span><img class="img-responsive" src="assets/images/google-icon.png"></span>
-        <button type="button" (click)="googleLogin()" class="btn btn-outline-info">Login with google</button>
     </div>
 </div>
+    

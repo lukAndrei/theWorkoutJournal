@@ -1,0 +1,58 @@
+.container {
+
+}
+.notes {
+    max-width:100%;
+    margin:0 auto;
+    text-align: center;
+
+}
+.notes a {
+    font-family: 'Sriracha', cursive;
+    font-size:18px;
+    color: inherit;
+}
+.notes>a:hover, .workout-title>a:focus, .workout-title>a:active {
+    color: #1E90FF;
+}
+
+.notesForm {
+    margin:0 auto ;
+    font-family: 'Sriracha', cursive;
+}
+
+.notesForm button {
+    display:block;
+    margin: 10px auto;  
+    border:none;
+}
+
+ li {
+    padding: 2px;
+    width:100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+span {
+    display:inline-flex;
+    word-wrap: break-word;
+    font-family: 'Sriracha', cursive;
+    font-size:18px;
+    max-width: 100%;
+    align-items: center;
+}
+
+li button {
+    display:block;
+    font-size: 16px;
+    border:none;
+    font-family: 'Sriracha', cursive;
+    font-size:16px;
+}
+li button:hover {
+    background: unset;
+    color:#ff69b4;
+
+
+}

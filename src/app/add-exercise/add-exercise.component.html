@@ -1,15 +1,30 @@
-    <div class="add-exercise">
-        <button   (click)="addNewExercise=!addNewExercise" class="btn btn-outline-primary exercise-button">
-           Create exercise
-        </button>
-        <form *ngIf="addNewExercise" #f="ngForm" (ngSubmit)="addExercise(f.value)">
-                 <div class="form-group">
-                     <input ngModel  #exerciseName="ngModel" name="exercise" class="form-control" type="text" placeholder="Exercise name" required>
-                  </div>         
-            <button style="margin-top:30px;" [disabled]="!f.valid" type="submit" class="btn btn-outline-primary btn-block ">Add exercise</button>          
-         </form>
-    </div>
-
-
+<button type="button" *ngIf="workout.exerciseList.length == 0" class="btn btn-sm red exercise-button-red" data-toggle="modal" data-target="#addExerciseModal">
+   Add exercise
+</button>
+<button type="button" *ngIf="workout.exerciseList.length > 0" class="btn btn-sm shadow-none p-2 exercise-button-blue" data-toggle="modal" data-target="#addExerciseModal">
+   Add exercise
+</button>
+<form id="addExerciseForm" #f="ngForm" (ngSubmit)="addExercise(f)">        
+   <div class="modal fade" id="addExerciseModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="addExerciseModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header d-flex align-items-center">
+                  <span id="headerName">{{exercise.name}}</span>
+                  <button type="button" class="btn btn-sm blue dismissModalButton"  (click)="dismissModal()" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+               <div class="card exercise-data-box">
+                  <div class="card-body">
+                     <edit-exercise [workout]="workout" [exercise]="exercise"></edit-exercise>
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button form="addExerciseForm" [disabled]="!this.exercise.name" type="submit" class="add-exercise-button btn btn-sm red">Add exercise</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</form> 
 
 

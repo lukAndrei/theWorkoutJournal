@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { ExerciseModel} from '../models/exercise.model';
 import { WorkoutModel } from '../models/workout.model';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AuthServiceService } from '../services/auth-service.service';
+declare var $: any;
 
 @Component({
   selector: 'add-exercise',
@@ -24,62 +25,37 @@ export class AddExerciseComponent implements OnInit {
     minutes: 0,
     seconds: 0
   }
-  exercise = new ExerciseModel(this.set, this.exName=name, this.units);
+  id="";
+  distance = 0;
+  modal;
+  orderNumber = 0
+  exercise: ExerciseModel;
   @Input() workout: WorkoutModel 
 
   constructor(private db: AngularFirestore, authService: AuthServiceService) { 
+    this.exercise = new ExerciseModel(this.set,this.exName,this.units,this.id,this.distance, this.orderNumber, this.time);
   }
 
   ngOnInit() {
   }
-  addExercise(form){
-    
-    this.exercise.setName(form.exercise);
-    this.exercise.setUnits('kg');
-    this.exercise.setTime(this.time)
+  ngAfterViewInit(){
+  }
+  addExercise(f){
     this.exercise.id = this.db.createId();
     this.workout.addEx(this.exercise);
     let newSet = [{
       reps: 1,
       weight: 0,
     }];
-    this.exercise = new ExerciseModel(newSet);
-    this.addNewExercise=false
-  }
-  addSet(){
-     this.exercise.addSet()
-  }
-
-  removeSet(){
-   this.exercise.removeSet()  
+    this.orderNumber = 0;``
+    f.reset();
+    this.exercise = new ExerciseModel(newSet,this.exName,this.units,this.id,this.distance,this.orderNumber,this.time);
+    $("#addExerciseModal").modal("toggle");
   }
 
-  setReps(i,reps){
-    reps = Number(reps)
-    this.exercise.setReps(i,reps)
+  dismissModal(){
+    $("#addExerciseModal").modal("toggle");
   }
-  setWeight(i,weight:number){
-    weight = Number(weight)
-    this.exercise.setWeight(i,weight)
-  }
-  setUnits(units:string){
-    this.exercise.setUnits(units)
-  }
-  setDistance(distance){
-    distance = Number(distance)
-    this.exercise.setDistance(distance)
-  }
-  setTime(time){
-    this.exercise.setTime(time)
-  }
-  changeExercise(exercise,k){
-    this.exercise = exercise;
-    this.deleteIndex = k
-    
-  }
-  removeExercise(){
-    this.workout.removeEx(this.deleteIndex)
-    this.workout.removeExFromAll(this.exercise.name)
-  }
+
 
 }

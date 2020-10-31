@@ -1,0 +1,112 @@
+
+input {
+    text-align: center;
+    font-family: 'Sriracha', cursive;
+    font-size: 15px;
+    border-radius: 7px;
+    border-bottom: 1px solid #e6e6e6;
+}
+select {
+    font-size: 15px;
+    border-radius: 7px;
+    border-bottom: 1px solid #e6e6e6;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+.container {
+     width: 100%;
+}
+
+form {
+    margin:0 auto;
+    width:100%;
+    background-color: white;
+}
+.exercise-button{
+    width: 200px;
+    display: block;
+    margin: auto;
+    border: none;
+    font-family: 'Sriracha', cursive;   
+    font-size: 15px;
+}
+.btn:active, .btn:focus, .btn:hover {
+    box-shadow: 0 0 0 2px #6466ff !important;
+} 
+
+.card {
+    border-radius:5px;
+    border: none;
+    width:100%;
+}
+.add-exercise{
+    margin:0 auto;
+    max-width:100%;
+    display: block;
+    font-family: 'Sriracha', cursive;  
+    font-size:15px;
+}
+
+.card-body {
+    padding:5px;
+}
+.control-buttons button{
+    display: flex;
+    align-items: center;
+    color: #6466ff;
+}
+.material-icons {
+    font-size: 16px;
+    font-weight:600;
+}
+#table-head {
+    font-size: 15px;
+    font-family: 'Sriracha', cursive;
+}
+#sets-box{
+    font-family: 'Sriracha', cursive;
+    font-size: 15px;
+}
+#setsNumber {
+    font-size:  15px;
+    display: flex;
+    align-items: flex-end;
+}
+
+#units-box {
+    font-family: 'Sriracha', cursive;
+    font-size: 15px;
+}
+
+#time-box {
+    font-family: 'Sriracha', cursive;
+    font-size:  15px;
+    width: 60%;
+    margin: 0 auto;
+}
+#time-box input {
+    width:50px;
+}
+#time-box span{
+    display:flex;
+    align-items: center;
+}
+.row {
+    width:95%;
+    margin:0 auto ;   
+}
+.row span {
+    display:block;
+    text-align:center;
+}
+.card-footer {
+    width:80%;
+    margin:auto;
+    background-color: white;
+    border:none;
+}

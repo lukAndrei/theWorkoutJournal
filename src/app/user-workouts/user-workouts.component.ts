@@ -23,15 +23,15 @@ export class UserWorkoutsComponent implements OnInit, OnDestroy {
      private removeWorkoutsService: RemoveWorkoutsService,
       private workoutSubscriptionService: WorkoutSubscriptionServiceService,
       private currentUserService: CurrentUserService) {
-      this.currentUser = this.currentUserService.getCurrentUser()
-       this.workoutsSubsbscription = this.getUserWorkouts.createUserWorkoutsList(this.currentUser.uid)
-        .subscribe(workouts=>{
-           this.workouts=workouts
-           console.log(this.workouts)
-          })
+      
      } 
     
   ngOnInit() {
+    this.currentUser = this.currentUserService.getCurrentUser()
+    this.workoutsSubsbscription = this.getUserWorkouts.createUserWorkoutsList(this.currentUser.uid)
+        .subscribe(workouts=>{
+           this.workouts=workouts
+          })
   }
 
   ngOnDestroy(){

@@ -1,0 +1,83 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+.time-button {
+    font-family: 'Roboto', sans-serif;
+    font-size:14px;
+    display:block;
+    font-weight: 400;
+    border-radius:7px;
+    color: #6466ff;
+    font-family: 'Roboto', sans-serif;
+}
+.red:active, .red:focus, .red:hover {
+    box-shadow: 0 0 0 2px  #ff4364 !important;
+}
+.blue:active, .blue:focus, .blue:hover {
+    box-shadow: 0 0 0 2px  #6466ff !important;
+}
+.superset-time {
+    border-bottom: 1px solid #e6e6e6;
+}
+.superset-ex-container{
+    width:  40%;
+}
+.superset-ex-list{
+    width: 100%;
+}
+.last-child {
+    border: none;
+}
+.dismissModalButton-blue {
+    font-family: 'Sriracha', cursive;
+    font-size:17px;
+    color: #ffffff;
+    background:#6466ff;
+    border: 2px solid #6466ff !important;
+    
+}
+.dismissModalButton-red {
+    font-family: 'Sriracha', cursive;
+    font-size:15px;
+    color: #ffffff;
+    background:#ff4364;
+    border: 2px solid #ff4364 !important;
+    
+}
+.superset-box{
+    display:flex;
+    flex-wrap: wrap;
+    width:100%;
+    justify-content: space-between;
+}
+.ex-name {
+    font-size:15px;
+    font-family: 'Sriracha', cursive; 
+}
+.ex-name span {
+    display:block;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+#time-box {
+    font-family: 'Sriracha', cursive;
+    font-size:  13px;
+    width: 60%;
+    margin: 0 auto;
+
+}
+#time-box input {
+    width:50px;
+    font-size: 13px;
+    text-align:center;
+
+}
+#time-box span{
+    display:flex;
+    align-items: center;
+}

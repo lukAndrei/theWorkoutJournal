@@ -1,0 +1,100 @@
+<div class="container">
+    <div *ngIf="workout.superSetList.length>0" class="card">
+        <div class="card-body p-1" cdkDropListGroup>
+            <div 
+            cdkDropList
+            [cdkDropListData]="workout.superSetList"
+            (cdkDropListDropped)="dropSuperset($event)"
+            class="superset-drop">
+                <div cdkDrag *ngFor="let superset of workout.superSetList; index as s" class="superset-box p-2">
+                    <div cdkDropListGroup class="superset-ex-container d-flex " >
+                        <div class="superset-ex-list"
+                        cdkDropList
+                        [cdkDropListData]="superset.exerciseList"
+                        (cdkDropListDropped)="dropExercise($event, superset)">
+                            <div cdkDrag *ngFor="let ex of superset.exerciseList" class="superset-ex-box p-1">
+                                <div class="row  no-gutters">
+                                    <div class="col flex-column">
+                                        <div class="row no-gutters">
+                                            <div class="col-12 align-self-center">
+                                                <div class="ex-name" type="button" (click)="selectExercise(ex)" data-toggle="modal" data-target="#editSuperSetExerciseModal">
+                                                    <span>{{ex.name}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start">
+                                            <div *ngIf="ex.units !='bw' && ex.units !='miles' && ex.units !='km'" class="sets">
+                                                <div class="reps" *ngFor="let set of ex.sets">
+                                                    <span>{{set.reps}} reps</span>
+                                                    <span *ngIf="set.weight != '0'" class="pl-1 pr-1"> @ </span>
+                                                    <span *ngIf="set.weight != '0'">{{ set.weight }}</span>
+                                                    <span *ngIf="set.weight != '0'">{{ ex.units }}</span>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="ex.units=='bw'" class="sets">
+                                                <div class="reps" *ngFor="let set of ex.sets">
+                                                    <span>{{set.reps}}</span>
+                                                    <span class="ml-1">reps</span>
+                                                </div>
+                                            </div>
+                                            <div class="sets" *ngIf="ex.units =='miles' || ex.units =='km' ">
+                                                <div class="reps" *ngFor="let set of ex.sets;index as i">
+                                                    <span class="ml-1">{{set.reps}} </span>
+                                                    <span class="ml-1">{{ ex.units }}</span>                                            
+                                                </div>
+                                            </div>
+                                            <div class="sets">
+                                                <span *ngIf="ex.time.hours>0" class="ml-1">{{ex.time.hours}} hours</span>
+                                                <span *ngIf="ex.time.minutes>0" class="ml-1">{{ex.time.minutes}} min </span>
+                                                <span *ngIf="ex.time.seconds>0" class="ml-1">{{ex.time.seconds}} seconds </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="selectedExercise" data-backdrop="static" data-keyboard="false"  class="modal m-0 fade" id="editSuperSetExerciseModal" tabindex="-1" role="dialog" aria-labelledby="editSuperSetExerciseModal" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header d-flex align-items-center">
+                                            <div class="m-0" id="header-name">{{ selectedExercise.name }}</div>
+                                            <button (click)="removeExerciseFromSet(superset,selectedExercise,s)" type="button" class="btn btn-sm red remove-button" data-dismiss="modal">delete</button>
+                                            <button type="button" class="btn btn-sm blue dismissModalButton-blue"  (click)="dismissModal()" aria-label="Close">X</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <edit-superset-exercise [workout]="workout" [exercise]="selectedExercise" [superset]="superset"></edit-superset-exercise>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-around align-items-center p-2">
+                                            <button type="button" class="btn btn-sm red dismissModalButton-red"  (click)="dismissModal()" aria-label="Done">done</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column superset-data-list align-items-center justify-content-center">
+                            <div *ngIf="superset.rounds>0" id="rounds" class="d-flex p-2">
+                                <span>rounds {{superset.rounds}}</span>
+                            </div>
+                            <div id="time" class="d-flex p-2">
+                                <div class="d-flex justify-content-center">
+                                    <div *ngIf="superset.time.hours>0" class="d-flex mr-2">
+                                        <span> {{superset.time.hours}}</span>
+                                        <span class="pl-1">h</span>
+                                    </div>
+                                    <div *ngIf="superset.time.minutes>0" class="d-flex mr-2">
+                                        <span> {{superset.time.minutes}}</span>
+                                        <span class="pl-1">min</span>
+                                    </div>
+                                    <div *ngIf="superset.time.minutes>0" class="d-flex">
+                                        <span> {{superset.time.seconds}}</span>
+                                        <span class="pl-1">sec</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

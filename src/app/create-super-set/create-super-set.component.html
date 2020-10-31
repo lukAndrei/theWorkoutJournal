@@ -1,159 +1,104 @@
-    <div class="form-block">
-        <button *ngIf="workout.exerciseList.length>0" style="margin:0px auto 30px;"  (click)="addSuperSet=!addSuperSet" class="btn btn-outline-primary btn-block">
-        Design workout
-        </button>
-        <form @expandCollapsed *ngIf="addSuperSet" #f="ngForm"  (ngSubmit)="createSuperSet(f.value)">
-            <div class="design-container" cdkDropListGroup>
-                <div class="exercise-container">
-                    <div  
-                        cdkDropList
-                        [cdkDropListData]="workout.exerciseList"
-                        (cdkDropListDropped)="dragDelete($event)"
-                        class="exercise-list">
-                        <div *ngIf="tempSuperSetList.length>0" class="drag-text">
-                            <span>Click or drag & drop exercises here to remove</span>
-                        </div>
-                        <div
-                        cdkDrag
-                        (click)="selectExercise(ex)"
-                         *ngFor="let ex of workout.exerciseList;index as j" class="exercise-box">
-                            {{ ex.name }} 
-                        </div>
+    <a href="" data-toggle="modal" role="button" data-target="#designWorkoutModal" *ngIf="workout.exerciseList.length>0"  (click)="addSuperSet=!addSuperSet" class="shadow-none btn btn-sm p-2 designWorkoutButton">
+    Design workout
+    </a>
+    <div class="modal fade" id="designWorkoutModal" tabindex="-1" role="dialog" aria-labelledby="designWorkoutModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex align-items-center">
+                    <div id="header-info" class="d-flex justify-content-start">
+                        <span>Design workout</span>
                     </div>
+                    <button type="button" class="btn btn-sm blue dismissModalButton" data-dismiss="modal">X</button>
                 </div>
-                <div class="exercise-container">
-                    <div 
-                        cdkDropList
-                        [cdkDropListData]="tempSuperSetList"
-                        (cdkDropListDropped)="drop($event)"
-                        class="workout-list">
-                        <div *ngIf="tempSuperSetList.length==0" class="drag-text">
-                            <span>Click or drag & drop exercises here</span>
+                <div class="modal-body">
+                    <form @expandCollapsed  #f="ngForm"  (ngSubmit)="createSuperSet(f.value)">
+                        <div class="design-container" cdkDropListGroup>
+                            <div class="exercise-container">
+                                <div  
+                                    cdkDropList
+                                    [cdkDropListData]="workout.exerciseList"
+                                    (cdkDropListDropped)="dragDelete($event)"
+                                    class="exercise-list">
+                                    <div
+                                    cdkDrag
+                                    (click)="selectExercise(ex)"
+                                        *ngFor="let ex of workout.exerciseList;index as j" class="exercise-box">
+                                        {{ ex.name }} 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="workout-container">
+                                <div 
+                                    cdkDropList
+                                    [cdkDropListData]="tempSuperSetList"
+                                    (cdkDropListDropped)="drop($event)"
+                                    class="workout-list">
+                                    <div *ngIf="tempSuperSetList.length==0" class="drag-text">
+                                        <span>Click on exercise to add</span>
+                                    </div>
+                                    <div
+                                    @selectExercise
+                                    cdkDrag
+                                    (click) = "removeExercise(k)"
+                                        *ngFor="let e of tempSuperSetList;index as k" class="drop-box">
+                                        {{ e.name }}
+                                    </div>
+                                    <div class="row mt-2 justify-content-center">
+                                        <button [disabled]="tempSuperSetList.length==0" type="submit" class="btn btn-sm red add-superset-button">
+                                            <span>Add superset</span>
+                                        </button> 
+                                    </div>
+                                </div>
+                                <div class="supersets p-0">
+                                    <div *ngFor="let superset of workout.superSetList; index as s" class="superset-container p-1">
+                                        <div class="p-1 add-ex-container">
+                                            <button *ngIf="tempSuperSetList.length==1" (click)="addExerciseToSet(s)" class="btn btn-sm blue add-exercise-button">Add exercise</button>
+                                        </div>
+                                        <div class="superset-ex-list p-0">
+                                            <div *ngFor="let ex of superset.exerciseList" class="superset-ex-box p-1">
+                                                <div class="p-0 ex-name row align-items-center no-gutters justify-content-between">
+                                                    <div class="col-10 p-0 align-self-start">
+                                                        <span>{{ex.name}}</span>
+                                                    </div>
+                                                    <div class="col-2 p-0">
+                                                        <button (click)="removeExerciseFromSet(superset,ex,s)" class="btn btn-sm red remove-ex-button">X</button>
+                                                    </div>
+                                                </div>
+                                                <div class="p-0 d-flex justify-content-between">
+                                                    <div *ngIf="ex.units !='bw' && ex.units !='miles' && ex.units !='km'" class="d-flex flex-column align-items-start justify-content-center sets">
+                                                        <div class="d-flex justify-content-start reps" *ngFor="let set of ex.sets">
+                                                            <span>{{set.reps}} reps</span>
+                                                            <span>@ {{ set.weight }}</span>
+                                                            <span>{{ ex.units }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="ex.units=='bw'" class="sets">
+                                                        <div class="reps" *ngFor="let set of ex.sets">
+                                                            <span>reps</span>
+                                                            <span>{{set.reps}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="sets" *ngIf="ex.units =='miles' || ex.units =='km' ">
+                                                        <div class="reps" *ngFor="let set of ex.sets">
+                                                            <span>round </span>
+                                                            <span>{{set.reps}} </span>
+                                                            <span>- {{ set.weight }}</span>
+                                                            <span>{{ ex.units }}</span>                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div
-                        @selectExercise
-                        cdkDrag
-                        (click) = "removeExercise(ex,k)"
-                         *ngFor="let e of tempSuperSetList;index as k" class="drop-box">
-                         {{ e.name }}
-                        </div>
-                    </div>
+                    </form>
                 </div>
-            </div>                         
-             <button [disabled]="tempSuperSetList.length==0" type="submit" class="btn btn-outline-primary add-superset-button">
-                <span>Add superset</span>
-            </button>
-        </form>
-    </div>
-    <div *ngIf="workout.superSetList.length>0" class="card">
-        <div class="card-header">
-            <div class="header-box">
-                 <span>{{workout.timestamp | date: 'EEEE, MMMM d'}}</span>   
-            </div>
-        </div>
-        <div class="card-body">
-            <div *ngFor="let superset of workout.superSetList; index as s" class="superset-box">
-                <div class="superset-ex-container">
-                    <div class="superset-ex-list">
-                        <div *ngFor="let ex of superset.exerciseList" class="superset-ex-box">
-                            <div class="ex-name">
-                                <span>{{ex.name}}</span>
-                            </div>
-                                <div *ngIf="ex.units !='bw' && ex.units !='miles' && ex.units !='km'" class="sets">
-                                    <div class="reps" *ngFor="let set of ex.sets">
-                                        <span>{{set.reps}} reps</span>
-                                        <span>@ {{ set.weight }}</span>
-                                        <span>{{ ex.units }}</span>
-                                    </div>
-                                </div>
-                                <div *ngIf="ex.units=='bw'" class="sets">
-                                    <div class="reps" *ngFor="let set of ex.sets">
-                                        <span>reps</span>
-                                        <span>{{set.reps}}</span>
-                                    </div>
-                                </div>
-                                <div class="sets" *ngIf="ex.units =='miles' || ex.units =='km' ">
-                                    <div class="reps" *ngFor="let set of ex.sets">
-                                        <span>round </span>
-                                        <span>{{set.reps}} </span>
-                                        <span>- {{ set.weight }}</span>
-                                        <span>{{ ex.units }}</span>                                            
-                                    </div>
-                                </div>
-                                <div class="remove-exercise">
-                                    <button (click)="removeExerciseFromSet(superset,ex,s)" class="btn btn-outline-primary remove-ex-button">remove</button>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="edit-ex-container">
-                            <button [disabled]="!tempSuperSetList.length==1" (click)="addExerciseToSet(s)" class="btn btn-outline-primary">Add exercise</button>
-                    </div>
-                </div>
-                <div class="superset-data-container">
-                    <div class="remove-set-box">
-                        <button (click)="removeSuperSet(s,superset.id)"class="btn btn-outline-primary">Remove set</button>
-                    </div>
-                    <div class="rounds-box">
-                        <div class="rounds-button">
-                            <a attr.data-target="#rounds-{{superset.id}}" data-toggle="collapse"  href=""><span>rounds {{superset.rounds}}</span></a>
-                        </div>
-                    </div>
-                    <div attr.id="rounds-{{superset.id}}" class="collapse editRounds">
-                        <input type="number" [(ngModel)]='superset.rounds' onKeyPress="if(this.value.length==3) return false" (change)='setRounds(superset,rounds.value)' class="form-control"  #rounds name='rounds' maxlength="4">
-                    </div>
-                    <div class="time-box">
-                            <a attr.data-target="#time-{{superset.id}}" data-toggle="collapse"  href="">
-                                <div *ngIf="superset.time.hours==0 && superset.time.minutes==0 && superset.time.seconds==0 ">
-                                    <span>set time</span>
-                                </div>
-                                <div class="show-time">
-                                    <div *ngIf="superset.time.hours>0" class="time-text">
-                                        <span> {{superset.time.hours}} h</span>
-                                    </div>
-                                    <div *ngIf="superset.time.minutes>0" class="time-text">
-                                        <span> {{superset.time.minutes}} min </span>
-                                    </div>
-                                    <div *ngIf="superset.time.seconds>0" class="time-text">
-                                        <span> {{superset.time.seconds}} sec</span>
-                                    </div>
-                                </div>
-                            </a>                                
-                    </div>
-                    <div attr.id="time-{{superset.id}}" class="collapse">
-                        <div class="set-time">
-                            <div class="form-group form-time">
-                                <span>h</span>
-                                <input type="number"  onKeyPress="if(this.value.length==2) return false" [(ngModel)]='superset.time.hours'  class="form-control" #timeHours name='hours' maxlength="2">
-                            </div>
-                            <div class="form-group form-time">
-                                <span>min</span>
-                                <input type="number" onKeyPress="if(this.value.length==3) return false" [(ngModel)]='superset.time.minutes' class="form-control" #timeMinutes name='minutes' maxlength="2">
-                            </div>
-                                <div class="form-group form-time">
-                                <span>sec</span>
-                                <input type="number" onKeyPress="if(this.value.length==2) return false" [(ngModel)]='superset.time.seconds'  class="form-control" #timeSeconds name='seconds' maxlength="2">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notes">
-                        <a attr.data-target="#addNote-{{superset.id}}" data-toggle="collapse"  href=""><span>add a note</span></a>
-                        <div attr.id="addNote-{{superset.id}}" class="collapse">
-                            <div class="form-group notesForm">
-                                <textarea  [(ngModel)]="noteMessage" #note class="form-control" placeholder="" rows=1 name="note"></textarea>
-                                <button type="button" (click)="addNote(superset,note.value)" class="btn btn-outline-primary">add</button> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notesList">
-                        <div *ngFor="let note of superset.notes;index as n">
-                            <div class="note">
-                                <span>{{note}}</span>
-                                <button type="button" (click)="removeNote(superset,n)" class="btn btn-outline-primary">remove</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="d-flex justify-content-center modal-footer p-2">
+                    <button type="button" class="btn btn-sm dismissModalButton" data-dismiss="modal">Done</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div>                         
 
