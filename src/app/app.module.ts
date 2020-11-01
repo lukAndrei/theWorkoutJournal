@@ -45,6 +45,7 @@ import { SetNotesModalComponent } from './set-notes-modal/set-notes-modal.compon
 import { GetFlaskWorkoutsComponent } from './get-flask-workouts/get-flask-workouts.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { DeleteWorkoutConirmationComponent } from './delete-workout-conirmation/delete-workout-conirmation.component';
 
 
 
@@ -73,6 +74,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     SetNotesModalComponent,
     GetFlaskWorkoutsComponent,
     ResetPasswordComponent,
+    DeleteWorkoutConirmationComponent,
 
   ],
   imports: [

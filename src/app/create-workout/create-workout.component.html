@@ -11,7 +11,7 @@
                     <!-- Button trigger modal -->
                     <button *ngIf="workout.name || workout.date || workout.category" type="button" class="btn shadow-none btn-sm workout-info-button" data-toggle="modal" data-target="#workoutModal">Workout info</button>
                     <button *ngIf="workout.superSetList.length>0 && workoutId" type="submit" form="workoutForm" class="btn btn-sm shadow-none red workout-update-button">Update</button>
-                    <button *ngIf="workoutId" (click)="deleteWorkout()" type="button"  class="btn shadow-none btn-sm workout-info-button">Delete</button>
+                    <delete-workout-conirmation [workout.id]></delete-workout-conirmation>
                 </div>
             </div>
             <div class="card-body">

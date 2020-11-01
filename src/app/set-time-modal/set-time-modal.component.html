@@ -13,9 +13,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngFor="let superset of workout.superSetList; let last = last " [ngClass]="{'last-child': last}" class="d-flex superset-time">
-                    <div class="superset-ex-container d-flex">
-                        <div class="superset-ex-list pb-3">
+                <div *ngFor="let superset of workout.superSetList; let last = last " [ngClass]="{'last-child': last}" class="d-flex p-2 superset-time">
+                    <div class="superset-ex-container p-2 flex-row">
+                        <div class="superset-ex-list">
                             <div *ngFor="let ex of superset.exerciseList" class="superset-ex-box p-0">
                                 <div class="row no-gutters p-1">
                                     <div class="ex-name">
@@ -25,16 +25,16 @@
                             </div>
                         </div>
                     </div>
-                    <div id="time-box" class=" border d-flex align-items-center justify-content-center">
-                        <div class="form-group d-flex justify-content-center mr-2">
+                    <div id="time-box" class=" d-flex align-items-center justify-content-center">
+                        <div class="form-group m-0 d-flex  justify-content-center mr-2">
                             <input type="number" [(ngModel)]='superset.time.hours'  class="form-control" #timeHours name='hours' maxlength="2">
                             <span class="p-1">h</span>
                         </div>
-                        <div class="form-group d-flex justify-content-center mr-2">
+                        <div class="form-group m-0 d-flex justify-content-center mr-2">
                             <input type="number" [(ngModel)]='superset.time.minutes' class="form-control" #timeMinutes name='minutes' maxlength="2">
                             <span class="p-1">min</span>
                         </div>
-                        <div class="form-group d-flex justify-content-center">
+                        <div class="form-group m-0 d-flex justify-content-center">
                             <input type="number"  [(ngModel)]='superset.time.seconds'  class="form-control" #timeSeconds name='seconds' maxlength="2">
                             <span class="p-1">sec</span>
                         </div>

@@ -1,0 +1,35 @@
+.workout-delete-button {
+    display:block;
+    width:140px;
+    color: #666666;
+    font-size: 14px;
+    font-weight:500;
+    border-radius:7px;
+    font-family: 'Roboto', sans-serif;
+}
+.workout-delete-button:hover {
+    background: #f2f2f2;
+}
+.workout-delete-button:active, .workout-info-button:focus {
+    background:  #d9d9d9;
+}
+.dismissModalButton-blue {
+    font-family: 'Sriracha', cursive;
+    font-size:17px;
+    color: #ffffff;
+    background:#6466ff;
+    border: 2px solid #6466ff !important;
+    
+}
+.dismissModalButton-red {
+    font-family: 'Sriracha', cursive;
+    font-size:15px;
+    color: #ffffff;
+    background:#ff4364;
+    border: 2px solid #ff4364 !important;
+}
+h1 {
+    font-size:14px;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+}

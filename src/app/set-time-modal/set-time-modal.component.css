@@ -21,13 +21,11 @@ input[type=number]::-webkit-outer-spin-button {
     box-shadow: 0 0 0 2px  #6466ff !important;
 }
 .superset-time {
-    border-bottom: 1px solid #e6e6e6;
 }
 .superset-ex-container{
     width:  40%;
 }
 .superset-ex-list{
-    width: 100%;
 }
 .last-child {
     border: none;

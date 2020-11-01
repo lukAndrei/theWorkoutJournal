@@ -12,8 +12,8 @@
                         cdkDropList
                         [cdkDropListData]="superset.exerciseList"
                         (cdkDropListDropped)="dropExercise($event, superset)">
-                            <div cdkDrag *ngFor="let ex of superset.exerciseList" class="superset-ex-box p-1">
-                                <div class="row  no-gutters">
+                            <div cdkDrag *ngFor="let ex of superset.exerciseList" class=" superset-ex-box p-1">
+                                <div class="row no-gutters">
                                     <div class="col flex-column">
                                         <div class="row no-gutters">
                                             <div class="col-12 align-self-center">
@@ -22,7 +22,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="d-flex justify-content-start">
+                                        <div class="row no-gutters justify-content-start">
                                             <div *ngIf="ex.units !='bw' && ex.units !='miles' && ex.units !='km'" class="sets">
                                                 <div class="reps" *ngFor="let set of ex.sets">
                                                     <span>{{set.reps}} reps</span>
@@ -70,11 +70,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex flex-column superset-data-list align-items-center justify-content-center">
-                            <div *ngIf="superset.rounds>0" id="rounds" class="d-flex p-2">
+                        <div class="d-flex p-0 flex-column superset-data-list align-items-center justify-content-center">
+                            <div *ngIf="superset.rounds>0" id="rounds" class="d-flex">
                                 <span>rounds {{superset.rounds}}</span>
                             </div>
-                            <div id="time" class="d-flex p-2">
+                            <div *ngIf="superset.time.hours>0 || superset.time.minutes>0 || superset.time.seconds>0" id="time" class="d-flex p-2">
                                 <div class="d-flex justify-content-center">
                                     <div *ngIf="superset.time.hours>0" class="d-flex mr-2">
                                         <span> {{superset.time.hours}}</span>

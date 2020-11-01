@@ -51,7 +51,7 @@ export class CreateWorkoutComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private generateWorkoutJSON: GenerateWorkoutJsonService,
     private removeWorkoutsService: RemoveWorkoutsService,
-    private getCategoriesService: GetCategoriesService
+    private getCategoriesService: GetCategoriesService,
     ){ 
   }
   
@@ -95,6 +95,7 @@ export class CreateWorkoutComponent implements OnInit, OnDestroy {
       return false
   }
   deleteWorkout(){
+    if (!confirm("Delete workout? Are you sure?")) return;
     this.removeWorkoutsService.deleteWorkout(this.workoutId);
     this.removeWorkoutsService.deleteAllWorkout(this.workoutId)
     this.router.navigate(['/user-workouts'])

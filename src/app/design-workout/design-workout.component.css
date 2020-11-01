@@ -74,12 +74,10 @@ input {
     margin: 0 auto;
 }
 .superset-ex-list{
-    width: 60%;
+    width: 50%;
 }
 .superset-data-list {
-    width:40%;
-    height:100%;
-    padding:5px
+    width:50%;
 }
 .superset-box{
     display:flex;
@@ -92,16 +90,17 @@ input {
 .superset-box:last-child{
     border: none;
 }
+.superset-ex-box{
+}
 .superset-ex-box:hover {
-    background-color: rgba(255, 67, 100, 0.2);
     text-align: center;
+    color: #ff4364;
 }
 .ex-name {
     font-size:16px;
     font-family: 'Sriracha', cursive; 
 }
-.ex-name:hover {
-}
+
 .ex-name span {
     display:block;
     word-wrap: break-word;
